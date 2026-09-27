@@ -223,7 +223,9 @@ php artisan migrate:status
 | `price` | DECIMAL(10,2) | — | Harga satuan (DECIMAL, bukan float) |
 | `status_ketersediaan` | BOOLEAN (TINYINT 1) | — | `default(true)` — status tersedia |
 
-#### 3.4 Skema Tabel Transaksi — Tabel 3: `orders`
+#### 3.4 Skema Tabel Tambahan / Transaksi (Tabel 3 dan Seterusnya)
+
+**Tabel 3: `orders`**
 
 - **Nama Tabel:** `orders`
 - **Berkas Migrasi:** `database/migrations/2026_09_22_082625_create_orders_table.php`
@@ -244,7 +246,7 @@ php artisan migrate:status
 | `total_price` | DECIMAL(12,2) | — | Total bayar, dihitung dari penjumlahan subtotal |
 | `notes` | TEXT | — | Catatan tambahan, boleh kosong |
 
-#### 3.5 Skema Tabel Detail — Tabel 4: `order_items`
+**Tabel 4: `order_items`**
 
 - **Nama Tabel:** `order_items`
 - **Berkas Migrasi:** `database/migrations/2026_09_22_082626_create_order_items_table.php`
