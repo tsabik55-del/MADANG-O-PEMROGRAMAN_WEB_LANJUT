@@ -12,6 +12,7 @@ class Menu extends Model
         'category_id',
         'name',
         'description',
+        'image',
         'price',
         'status_ketersediaan',
     ];

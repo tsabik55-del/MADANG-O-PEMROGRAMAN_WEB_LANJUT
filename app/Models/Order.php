@@ -16,6 +16,7 @@ class Order extends Model
         'pickup_datetime',
         'payment_method',
         'payment_status',
+        'status',
         'pickup_status',
         'source',
         'total_price',
@@ -35,5 +36,10 @@ class Order extends Model
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
     }
 }
