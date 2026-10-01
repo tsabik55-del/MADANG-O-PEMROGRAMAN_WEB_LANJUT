@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
@@ -38,7 +39,16 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function payment()
+    /**
+     * Alias ringkas untuk orderItems(), dipakai di seluruh view
+     * dan eager-loading (with/load 'items.menu').
+     */
+    public function items(): HasMany
+    {
+        return $this->orderItems();
+    }
+
+    public function payment(): HasOne
     {
         return $this->hasOne(Payment::class);
     }
