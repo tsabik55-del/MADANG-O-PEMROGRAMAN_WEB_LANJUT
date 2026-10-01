@@ -28,6 +28,18 @@ class OrderSeeder extends Seeder
             $user = $source === 'online' ? $pelanggan->random() : null;
             $customerName = $source === 'online' ? $user->name : fake()->name();
 
+            $paymentStatus = fake()->randomElement(['belum_lunas', 'lunas']);
+            $pickupStatus = fake()->randomElement(['belum_diambil', 'sudah_diambil']);
+
+            // Status alur pesanan harus konsisten dengan status bayar & ambil.
+            if ($paymentStatus === 'belum_lunas' && $pickupStatus === 'belum_diambil') {
+                $status = fake()->randomElement(['menunggu_pembayaran', 'menunggu_pembayaran', 'dibatalkan']);
+            } elseif ($paymentStatus === 'lunas' && $pickupStatus === 'belum_diambil') {
+                $status = fake()->randomElement(['diproses', 'siap']);
+            } else {
+                $status = 'selesai';
+            }
+
             $order = Order::create([
                 'order_number' => $orderNumber,
                 'user_id' => $user?->id,
@@ -35,8 +47,9 @@ class OrderSeeder extends Seeder
                 'phone' => '08' . fake()->numerify('##########'),
                 'pickup_datetime' => $pickupDate,
                 'payment_method' => fake()->randomElement(['tunai', 'transfer']),
-                'payment_status' => fake()->randomElement(['belum_lunas', 'lunas']),
-                'pickup_status' => fake()->randomElement(['belum_diambil', 'sudah_diambil']),
+                'payment_status' => $paymentStatus,
+                'status' => $status,
+                'pickup_status' => $pickupStatus,
                 'source' => $source,
                 'total_price' => 0,
                 'notes' => fake()->optional(0.3)->sentence(),

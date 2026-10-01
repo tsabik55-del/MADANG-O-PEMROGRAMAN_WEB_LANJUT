@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             UserSeeder::class,
             OrderSeeder::class,
+            PaymentSeeder::class,
         ]);
     }
 }

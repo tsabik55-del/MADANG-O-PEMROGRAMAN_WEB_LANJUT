@@ -9,10 +9,13 @@ class CategorySeeder extends Seeder
 {
     public function run(): void
     {
-        $categories = ['Menu Harian', 'Paket Katering'];
+        $categories = [
+            ['name' => 'Menu Harian', 'icon' => '🍚'],
+            ['name' => 'Paket Katering', 'icon' => '📦'],
+        ];
 
-        foreach ($categories as $name) {
-            Category::create(['name' => $name]);
+        foreach ($categories as $category) {
+            Category::create($category);
         }
     }
 }
