@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('menus', \App\Http\Controllers\Owner\MenuController::class)->except(['show']);
         Route::resource('orders', \App\Http\Controllers\Owner\OrderController::class)->except(['create', 'store']);
+        Route::resource('users', \App\Http\Controllers\Owner\UserController::class)->except(['show']);
     });
 
     Route::middleware('role:karyawan')->prefix('karyawan')->name('karyawan.')->group(function () {

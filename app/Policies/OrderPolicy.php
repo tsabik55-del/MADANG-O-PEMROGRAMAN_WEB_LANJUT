@@ -40,7 +40,7 @@ class OrderPolicy
             return true;
         }
         if ($user->role === 'pelanggan' && $user->id === $order->user_id) {
-            return $order->payment_status === 'belum_lunas' && $order->pickup_status === 'belum_diambil';
+            return $order->status === 'menunggu_pembayaran';
         }
         return false;
     }
