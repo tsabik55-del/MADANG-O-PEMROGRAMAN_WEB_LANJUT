@@ -37,30 +37,34 @@
                 </div>
 
                 <div class="border-t pt-4">
-                    <div class="grid grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Status Pembayaran</label>
-                            <form action="{{ route('karyawan.orders.update-status', $order) }}" method="POST" class="inline">
-                                @csrf @method('PATCH')
-                                <input type="hidden" name="pickup_status" value="{{ $order->pickup_status }}">
-                                <select name="payment_status" onchange="this.form.submit()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <form action="{{ route('karyawan.orders.update-status', $order) }}" method="POST">
+                        @csrf @method('PATCH')
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Status Pembayaran</label>
+                                <select name="payment_status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                                     <option value="belum_lunas" {{ $order->payment_status === 'belum_lunas' ? 'selected' : '' }}>Belum Lunas</option>
                                     <option value="lunas" {{ $order->payment_status === 'lunas' ? 'selected' : '' }}>Lunas</option>
                                 </select>
-                            </form>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Status Ambil</label>
-                            <form action="{{ route('karyawan.orders.update-status', $order) }}" method="POST" class="inline">
-                                @csrf @method('PATCH')
-                                <input type="hidden" name="payment_status" value="{{ $order->payment_status }}">
-                                <select name="pickup_status" onchange="this.form.submit()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Status Ambil</label>
+                                <select name="pickup_status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                                     <option value="belum_diambil" {{ $order->pickup_status === 'belum_diambil' ? 'selected' : '' }}>Belum Diambil</option>
                                     <option value="sudah_diambil" {{ $order->pickup_status === 'sudah_diambil' ? 'selected' : '' }}>Sudah Diambil</option>
                                 </select>
-                            </form>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Status Alur Pesanan</label>
+                                <select name="status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                    @foreach(['menunggu_pembayaran' => 'Menunggu Pembayaran', 'diproses' => 'Diproses', 'siap' => 'Siap', 'dikirim' => 'Dikirim', 'selesai' => 'Selesai', 'dibatalkan' => 'Dibatalkan'] as $value => $label)
+                                        <option value="{{ $value }}" {{ $order->status === $value ? 'selected' : '' }}>{{ $label }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Simpan Status</button>
+                    </form>
                 </div>
             </div>
 

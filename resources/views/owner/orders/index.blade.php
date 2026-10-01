@@ -18,6 +18,7 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pembayaran</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ambil</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Alur</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Sumber</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
                         </tr>
@@ -50,6 +51,18 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                    @if(in_array($order->status, ['selesai']))
+                                        bg-green-100 text-green-800
+                                    @elseif($order->status === 'dibatalkan')
+                                        bg-red-100 text-red-800
+                                    @else
+                                        bg-indigo-100 text-indigo-800
+                                    @endif">
+                                    {{ ucfirst(str_replace('_', ' ', $order->status)) }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                     @if($order->source === 'online')
                                         bg-purple-100 text-purple-800
                                     @else
@@ -65,7 +78,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="7" class="px-6 py-12 text-center text-gray-500">Belum ada pesanan</td>
+                            <td colspan="8" class="px-6 py-12 text-center text-gray-500">Belum ada pesanan</td>
                         </tr>
                         @endforelse
                     </tbody>

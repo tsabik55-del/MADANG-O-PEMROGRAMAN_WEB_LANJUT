@@ -29,8 +29,17 @@
                         @forelse($menus as $menu)
                         <tr>
                             <td class="px-6 py-4">
-                                <div class="font-medium text-gray-900">{{ $menu->name }}</div>
-                                <div class="text-sm text-gray-500">{{ $menu->description }}</div>
+                                <div class="flex items-center gap-3">
+                                    @if($menu->image)
+                                        <img src="{{ asset($menu->image) }}" alt="{{ $menu->name }}" class="w-12 h-12 rounded object-cover">
+                                    @else
+                                        <div class="w-12 h-12 rounded bg-gray-100 flex items-center justify-center text-gray-400 text-xs">foto</div>
+                                    @endif
+                                    <div>
+                                        <div class="font-medium text-gray-900">{{ $menu->name }}</div>
+                                        <div class="text-sm text-gray-500">{{ $menu->description }}</div>
+                                    </div>
+                                </div>
                             </td>
                             <td class="px-6 py-4 text-gray-500">{{ $menu->category->name }}</td>
                             <td class="px-6 py-4 text-gray-900">Rp{{ number_format($menu->price, 0, ',', '.') }}</td>

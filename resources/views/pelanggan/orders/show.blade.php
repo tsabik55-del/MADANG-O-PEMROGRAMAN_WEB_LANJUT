@@ -60,6 +60,19 @@
                                 {{ ucfirst(str_replace('_', ' ', $order->pickup_status)) }}
                             </span>
                         </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Status Pesanan</p>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                @if($order->status === 'selesai')
+                                    bg-green-100 text-green-800
+                                @elseif($order->status === 'dibatalkan')
+                                    bg-red-100 text-red-800
+                                @else
+                                    bg-indigo-100 text-indigo-800
+                                @endif">
+                                {{ ucfirst(str_replace('_', ' ', $order->status)) }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -13,7 +13,7 @@
                     <div class="flex flex-wrap gap-2">
                         @foreach($categories as $category)
                             <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-green-100 hover:text-green-800 transition filter-btn" data-category="{{ $category->id }}">
-                                {{ $category->name }}
+                                @if($category->icon)<span class="mr-1">{{ $category->icon }}</span>@endif{{ $category->name }}
                             </button>
                         @endforeach
                     </div>
@@ -24,15 +24,19 @@
                 @foreach($categories as $category)
                     @if($menus->has($category->id))
                         <div class="menu-category" data-category="{{ $category->id }}">
-                            <h3 class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">{{ $category->name }}</h3>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">@if($category->icon){{ $category->icon }} @endif{{ $category->name }}</h3>
                             <div class="grid grid-cols-1 gap-4">
                                 @foreach($menus[$category->id] as $menu)
                                     @if($menu->status_ketersediaan)
                                         <div class="bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition">
-                                            <div class="bg-gray-100 h-32 flex items-center justify-center">
-                                                <svg class="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                                                </svg>
+                                            <div class="bg-gray-100 h-32 flex items-center justify-center overflow-hidden">
+                                                @if($menu->image)
+                                                    <img src="{{ asset($menu->image) }}" alt="{{ $menu->name }}" class="w-full h-full object-cover">
+                                                @else
+                                                    <svg class="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                                                    </svg>
+                                                @endif
                                             </div>
                                             <div class="p-4">
                                                 <h4 class="font-semibold text-gray-800">{{ $menu->name }}</h4>
@@ -126,6 +130,10 @@
                                 <label class="flex items-center gap-2">
                                     <input type="radio" name="payment_method" value="transfer" class="text-green-600 focus:ring-green-500">
                                     <span>Transfer Bank</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="radio" name="payment_method" value="qris" class="text-green-600 focus:ring-green-500">
+                                    <span>QRIS</span>
                                 </label>
                             </div>
                         </div>

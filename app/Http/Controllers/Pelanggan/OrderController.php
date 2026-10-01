@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Menu;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -28,6 +29,10 @@ class OrderController extends Controller
             return back()->with('error', 'Keranjang kosong.');
         }
 
+        $request->validate([
+            'payment_method' => 'required|in:tunai,transfer,qris',
+        ]);
+
         $order = Order::create([
             'order_number' => 'MAD-' . now()->format('Ymd') . '-' . str_pad(Order::count() + 1, 4, '0', STR_PAD_LEFT),
             'user_id' => auth()->id(),
@@ -36,6 +41,7 @@ class OrderController extends Controller
             'pickup_datetime' => $request->pickup_datetime,
             'payment_method' => $request->payment_method,
             'payment_status' => 'belum_lunas',
+            'status' => 'menunggu_pembayaran',
             'pickup_status' => 'belum_diambil',
             'source' => 'online',
             'total_price' => $totalPrice,
@@ -52,6 +58,13 @@ class OrderController extends Controller
             ]);
         }
 
+        Payment::create([
+            'order_id' => $order->id,
+            'method' => $request->payment_method,
+            'amount' => $totalPrice,
+            'status' => 'pending',
+        ]);
+
         return redirect()->route('pelanggan.orders.show', $order)
             ->with('success', 'Pesanan berhasil dibuat! Silakan ambil pada waktu yang ditentukan.');
     }
@@ -67,8 +80,11 @@ class OrderController extends Controller
     {
         $this->authorize('delete', $order);
 
-        if (! in_array($order->payment_status, ['belum_lunas'])) {
-            return back()->with('error', 'Pesanan tidak bisa dibatalkan pada status ini.');
+        // Aturan bisnis: pesanan boleh dibatalkan selama status alur
+        // belum masuk tahap proses (menunggu_pembayaran). Setelah diproses,
+        // pelanggan tidak bisa membatalkan sendiri.
+        if (! in_array($order->status, ['menunggu_pembayaran'])) {
+            return back()->with('error', 'Pesanan tidak bisa dibatalkan karena sudah diproses.');
         }
 
         $order->delete();

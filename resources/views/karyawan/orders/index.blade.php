@@ -31,6 +31,7 @@
                                 <form action="{{ route('karyawan.orders.update-status', $order) }}" method="POST" class="inline">
                                     @csrf @method('PATCH')
                                     <input type="hidden" name="pickup_status" value="{{ $order->pickup_status }}">
+                                    <input type="hidden" name="status" value="{{ $order->status }}">
                                     <select name="payment_status" onchange="this.form.submit()" class="text-xs px-2 py-1 border border-gray-300 rounded
                                         @if($order->payment_status === 'lunas')
                                             bg-green-100 text-green-800
@@ -46,6 +47,7 @@
                                 <form action="{{ route('karyawan.orders.update-status', $order) }}" method="POST" class="inline">
                                     @csrf @method('PATCH')
                                     <input type="hidden" name="payment_status" value="{{ $order->payment_status }}">
+                                    <input type="hidden" name="status" value="{{ $order->status }}">
                                     <select name="pickup_status" onchange="this.form.submit()" class="text-xs px-2 py-1 border border-gray-300 rounded
                                         @if($order->pickup_status === 'sudah_diambil')
                                             bg-green-100 text-green-800

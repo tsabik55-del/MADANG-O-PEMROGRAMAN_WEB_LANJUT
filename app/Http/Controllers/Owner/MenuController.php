@@ -27,6 +27,7 @@ class MenuController extends Controller
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'image' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
             'status_ketersediaan' => 'boolean',
         ]);
@@ -48,6 +49,7 @@ class MenuController extends Controller
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'image' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
             'status_ketersediaan' => 'boolean',
         ]);

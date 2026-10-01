@@ -25,6 +25,7 @@ class OrderController extends Controller
         $validated = $request->validate([
             'payment_status' => 'required|in:belum_lunas,lunas',
             'pickup_status' => 'required|in:belum_diambil,sudah_diambil',
+            'status' => 'required|in:menunggu_pembayaran,diproses,siap,dikirim,selesai,dibatalkan',
         ]);
 
         $order->update($validated);

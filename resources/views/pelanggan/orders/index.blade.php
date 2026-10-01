@@ -21,6 +21,7 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pembayaran</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ambil</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
                         </tr>
                     </thead>
@@ -50,14 +51,26 @@
                                     {{ ucfirst(str_replace('_', ' ', $order->pickup_status)) }}
                                 </span>
                             </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                    @if($order->status === 'selesai')
+                                        bg-green-100 text-green-800
+                                    @elseif($order->status === 'dibatalkan')
+                                        bg-red-100 text-red-800
+                                    @else
+                                        bg-indigo-100 text-indigo-800
+                                    @endif">
+                                    {{ ucfirst(str_replace('_', ' ', $order->status)) }}
+                                </span>
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <a href="{{ route('pelanggan.orders.show', $order) }}" class="text-blue-600 hover:text-blue-900 mr-3">Detail</a>
-                                @if($order->payment_status === 'belum_lunas' && $order->pickup_status === 'belum_diambil')
+                                @can('delete', $order)
                                     <form action="{{ route('pelanggan.orders.destroy', $order) }}" method="POST" class="inline" onsubmit="return confirm('Batalkan pesanan ini?')">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="text-red-600 hover:text-red-900">Batal</button>
                                     </form>
-                                @endif
+                                @endcan
                             </td>
                         </tr>
                         @empty
