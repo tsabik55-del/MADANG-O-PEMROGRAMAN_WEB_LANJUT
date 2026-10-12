@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -13,12 +14,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // SQLite (dipakai saat testing) memperlakukan ENUM sebagai TEXT.
-        if (DB::getDriverName() === 'sqlite') {
-            return;
-        }
-
-        DB::statement("ALTER TABLE orders MODIFY payment_method ENUM('tunai', 'transfer', 'qris') NOT NULL DEFAULT 'tunai'");
+        // Driver SQLite milik Laravel tetap membuat CHECK constraint untuk
+        // kolom enum, jadi kolom harus ikut diubah agar qris bisa disimpan.
+        Schema::table('orders', function (Blueprint $table) {
+            $table->enum('payment_method', ['tunai', 'transfer', 'qris'])
+                ->default('tunai')
+                ->change();
+        });
     }
 
     /**
@@ -26,12 +28,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        if (DB::getDriverName() === 'sqlite') {
-            return;
-        }
-
-        DB::table('orders')->where('payment_method', 'qris')->update(['payment_method' => 'tunai']);
-
-        DB::statement("ALTER TABLE orders MODIFY payment_method ENUM('tunai', 'transfer') NOT NULL DEFAULT 'tunai'");
+        Schema::table('orders', function (Blueprint $table) {
+            $table->enum('payment_method', ['tunai', 'transfer'])->default('tunai')->change();
+        });
     }
 };
