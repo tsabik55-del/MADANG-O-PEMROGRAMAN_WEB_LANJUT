@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <h2 class="font-semibold text-xl text-gray-800">Menu Management</h2>
-            <a href="{{ route('owner.menus.create') }}" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+            <a href="{{ route('owner.menus.create') }}" class="bg-brand-700 text-white px-4 py-2 rounded-lg hover:bg-brand-800 transition">
                 Tambah Menu
             </a>
         </div>
@@ -15,7 +15,7 @@
             @endif
 
             <div class="bg-white shadow rounded-lg overflow-hidden">
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="madang-table min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Menu</th>
@@ -30,8 +30,8 @@
                         <tr>
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    @if($menu->image)
-                                        <img src="{{ asset($menu->image) }}" alt="{{ $menu->name }}" class="w-12 h-12 rounded object-cover">
+                                    @if($menu->image_url)
+                                        <img src="{{ $menu->image_url }}" alt="{{ $menu->name }}" class="w-12 h-12 rounded object-cover">
                                     @else
                                         <div class="w-12 h-12 rounded bg-gray-100 flex items-center justify-center text-gray-400 text-xs">foto</div>
                                     @endif

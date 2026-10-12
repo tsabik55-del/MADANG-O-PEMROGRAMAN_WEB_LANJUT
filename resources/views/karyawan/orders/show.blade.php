@@ -32,7 +32,7 @@
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">Total</p>
-                        <p class="font-medium text-green-600">Rp{{ number_format($order->total_price, 0, ',', '.') }}</p>
+                        <p class="font-medium text-brand-700 font-term">Rp{{ number_format($order->total_price, 0, ',', '.') }}</p>
                     </div>
                 </div>
 
@@ -63,14 +63,14 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Simpan Status</button>
+                        <button type="submit" class="px-4 py-2 bg-brand-700 text-white rounded-lg hover:bg-brand-800">Simpan Status</button>
                     </form>
                 </div>
             </div>
 
             <div class="bg-white shadow rounded-lg p-6">
                 <h3 class="text-lg font-semibold mb-4">Item Pesanan</h3>
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="madang-table min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Menu</th>

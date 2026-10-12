@@ -7,45 +7,50 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="madang-hero madang-stripes madang-stripes-animated rounded-2xl p-6 sm:p-8 mb-8 text-cream shadow-lg hero-animate">
+                <p class="font-term text-xs tracking-[0.25em] text-cream/70">MADANG-O // KARYAWAN</p>
+                <h2 class="text-2xl sm:text-3xl font-extrabold mt-1">Meja Operasional</h2>
+                <p class="text-cream/80 text-sm mt-1">Terima pesanan, verifikasi bayar, tandai pengambilan.</p>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white overflow-hidden shadow rounded-lg p-6">
+                <div class="bg-white overflow-hidden shadow rounded-lg p-6 border-t-4 border-brand-700">
                     <div class="flex items-center">
-                        <div class="bg-blue-100 p-3 rounded-lg">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="bg-brand-100 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm text-gray-500">Total Pesanan</p>
-                            <p class="text-2xl font-bold text-gray-800">{{ $stats['total_orders'] }}</p>
+                            <p class="font-term text-xs tracking-widest text-gray-500">TOTAL_PESANAN</p>
+                            <p class="text-2xl font-bold text-gray-800 font-term">{{ $stats['total_orders'] }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white overflow-hidden shadow rounded-lg p-6">
+                <div class="bg-white overflow-hidden shadow rounded-lg p-6 border-t-4 border-brand-700">
                     <div class="flex items-center">
-                        <div class="bg-yellow-100 p-3 rounded-lg">
-                            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="bg-brand-100 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm text-gray-500">Belum Lunas</p>
-                            <p class="text-2xl font-bold text-gray-800">{{ $stats['orders_belum_lunas'] }}</p>
+                            <p class="font-term text-xs tracking-widest text-gray-500">BELUM_LUNAS</p>
+                            <p class="text-2xl font-bold text-gray-800 font-term">{{ $stats['orders_belum_lunas'] }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white overflow-hidden shadow rounded-lg p-6">
+                <div class="bg-white overflow-hidden shadow rounded-lg p-6 border-t-4 border-brand-700">
                     <div class="flex items-center">
-                        <div class="bg-orange-100 p-3 rounded-lg">
-                            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="bg-brand-100 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm text-gray-500">Belum Diambil</p>
-                            <p class="text-2xl font-bold text-gray-800">{{ $stats['orders_belum_diambil'] }}</p>
+                            <p class="font-term text-xs tracking-widest text-gray-500">BELUM_DIAMBIL</p>
+                            <p class="text-2xl font-bold text-gray-800 font-term">{{ $stats['orders_belum_diambil'] }}</p>
                         </div>
                     </div>
                 </div>
@@ -86,7 +91,7 @@
                     <h3 class="text-lg font-medium text-gray-900">Pesanan Terbaru</h3>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
+                    <table class="madang-table min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No. Pesanan</th>

@@ -36,7 +36,7 @@
                     </div>
                     <div class="flex gap-3">
                         <a href="{{ route('owner.orders.index') }}" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">Batal</a>
-                        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Simpan</button>
+                        <button type="submit" class="px-4 py-2 bg-brand-700 text-white rounded-lg hover:bg-brand-800">Simpan</button>
                     </div>
                 </form>
             </div>

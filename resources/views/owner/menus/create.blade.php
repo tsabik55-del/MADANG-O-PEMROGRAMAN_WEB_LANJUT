@@ -33,12 +33,12 @@
                         <input type="number" name="price" required min="0" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                     </div>
                     <div class="mb-4 flex items-center">
-                        <input type="checkbox" name="status_ketersediaan" value="1" checked id="status_ketersediaan" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                        <input type="checkbox" name="status_ketersediaan" value="1" checked id="status_ketersediaan" class="h-4 w-4 text-brand-700 focus:ring-brand-600 border-gray-300 rounded">
                         <label for="status_ketersediaan" class="ml-2 text-sm text-gray-700">Tersedia</label>
                     </div>
                     <div class="flex gap-3">
                         <a href="{{ route('owner.menus.index') }}" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">Batal</a>
-                        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Simpan</button>
+                        <button type="submit" class="px-4 py-2 bg-brand-700 text-white rounded-lg hover:bg-brand-800">Simpan</button>
                     </div>
                 </form>
             </div>

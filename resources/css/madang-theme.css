@@ -1,0 +1,345 @@
+/* ============================================================
+   MADANG-O theme layer — adaptasi gaya Hermes Agent
+   (full-bleed warna berani + teks terang + aksen mono/terminal)
+   Warna primer: merah sambal (pengganti biru elektrik #0000f2)
+   ============================================================ */
+
+:root {
+    --madang-brand: #a50d27;
+    --madang-brand-dark: #7e0a1f;
+    --madang-brand-deep: #560614;
+    --madang-coal: #220d0a;
+    --madang-cream: #faf5ec;
+    --madang-paper: #fffdf8;
+    --madang-ember: #e4572e;
+}
+
+::selection {
+    background: var(--madang-brand);
+    color: #fff;
+}
+
+/* Hero full-bleed ala Hermes: gradasi sambal + pola garis halus.
+   PENTING: semua lapis background harus dalam SATU deklarasi —
+   class terpisah yang menyetel background-image akan menimpa warna. */
+.madang-hero {
+    background-color: #a50d27;
+    background-image:
+        repeating-linear-gradient(
+            -45deg,
+            rgba(255, 255, 255, 0.05) 0 12px,
+            transparent 12px 26px
+        ),
+        radial-gradient(1200px 400px at 85% -10%, rgba(228, 87, 46, 0.35), transparent 60%),
+        radial-gradient(900px 380px at -10% 110%, rgba(0, 0, 0, 0.35), transparent 55%),
+        linear-gradient(135deg, #c8102e 0%, #a50d27 45%, #560614 100%);
+}
+
+/* Alias pola garis — dikosongkan supaya tidak menimpa .madang-hero.
+   Pola sudah menyatu di dalam .madang-hero di atas. */
+.madang-stripes {
+    /* pola garis: lihat .madang-hero */
+}
+
+/* Kartu nomor ala seksi "#1..#6" Hermes */
+.madang-index {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    letter-spacing: 0.2em;
+}
+
+/* Garis tepi tiket/nota */
+.madang-ticket {
+    --notch: #faf5ec;
+    background-image:
+        radial-gradient(circle at 0 50%, var(--notch) 9px, transparent 10px),
+        radial-gradient(circle at 100% 50%, var(--notch) 9px, transparent 10px);
+}
+
+/* Fokus input selaras tema */
+.madang-focus:focus {
+    border-color: var(--madang-brand) !important;
+    --tw-ring-color: var(--madang-brand) !important;
+}
+
+/* ============================================================
+   ANIMASI
+   ============================================================ */
+
+/* Hal yang perlu dihormati pengguna */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- 1. Keranjang: slide masuk dari kanan --- */
+.cart-panel {
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+}
+
+.cart-panel.is-open {
+    transform: translateX(0);
+}
+
+.cart-overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cart-overlay.is-open {
+    opacity: 1;
+}
+
+/* --- 2. Item keranjang: masuk halus + highlight saat ditambah --- */
+@keyframes cart-item-in {
+    from {
+        opacity: 0;
+        transform: translateX(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.cart-item {
+    animation: cart-item-in 0.28s ease both;
+}
+
+@keyframes cart-flash {
+    0% {
+        background-color: rgba(200, 16, 46, 0.18);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+.cart-item.is-new {
+    animation:
+        cart-item-in 0.28s ease both,
+        cart-flash 0.9s ease 0.1s;
+}
+
+/* --- 3. Badge: denyut saat angka berubah --- */
+@keyframes cart-pop {
+    0% {
+        transform: scale(1);
+    }
+    45% {
+        transform: scale(1.35);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.cart-badge.is-bump {
+    animation: cart-pop 0.34s ease;
+}
+
+/* --- 4. Tombol keranjang mengambang: denyut halus saat ada isi --- */
+@keyframes cart-float-pulse {
+    0%,
+    100% {
+        box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 10px 25px -6px rgba(165, 13, 39, 0.75);
+    }
+}
+
+.cart-float.has-items {
+    animation: cart-float-pulse 2.6s ease-in-out infinite;
+}
+
+/* --- 5. Reveal saat scroll (dikendalikan IntersectionObserver) ---
+   PENTING: state "tersembunyi" hanya berlaku kalau JS aktif (html.js-reveal).
+   Tanpa JS, konten tetap terlihat — tidak pernah hilang permanen. */
+.js-reveal .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+        opacity 0.6s ease,
+        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js-reveal .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* Muncul bertahap (stagger) */
+.js-reveal .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js-reveal .reveal-stagger.is-visible > * {
+    opacity: 1;
+    transform: none;
+}
+
+.js-reveal .reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0.02s; }
+.js-reveal .reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 0.08s; }
+.js-reveal .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 0.14s; }
+.js-reveal .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 0.2s; }
+.js-reveal .reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 0.26s; }
+.js-reveal .reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 0.32s; }
+.js-reveal .reveal-stagger.is-visible > *:nth-child(7) { transition-delay: 0.38s; }
+.js-reveal .reveal-stagger.is-visible > *:nth-child(8) { transition-delay: 0.44s; }
+.js-reveal .reveal-stagger.is-visible > *:nth-child(9) { transition-delay: 0.5s; }
+
+/* --- 6. Hero: masuk dengan fade-turun --- */
+@keyframes hero-rise {
+    from {
+        opacity: 0;
+        transform: translateY(26px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* Hanya empat anak pertama yang ikut animasi. Tanpa batas ini, elemen
+ * apa pun yang ditambahkan ke dalam hero (mis. panel keranjang) ikut
+ * dianimasikan dan ikut ter-geser transform-nya. */
+.hero-animate > *:nth-child(-n + 4) {
+    animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-animate > *:nth-child(1) { animation-delay: 0.05s; }
+.hero-animate > *:nth-child(2) { animation-delay: 0.15s; }
+.hero-animate > *:nth-child(3) { animation-delay: 0.25s; }
+.hero-animate > *:nth-child(4) { animation-delay: 0.35s; }
+
+/* --- 7. Garis dekoratif bergeser pelan (efek "live") --- */
+@keyframes stripe-drift {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 52px 0;
+    }
+}
+
+.madang-stripes-animated {
+    animation: stripe-drift 9s linear infinite;
+}
+
+/* --- 8. Hover halus pada kartu & tombol --- */
+.hover-lift {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px -14px rgba(0, 0, 0, 0.35);
+}
+
+/* --- 10. Piring nasi sambel 3D di halaman depan --- */
+.nasi-sambel-3d-wrap {
+    position: relative;
+    width: 100%;
+    height: clamp(260px, 42vw, 380px);
+    border-radius: 1rem;
+    background: linear-gradient(160deg, #fffdf8 0%, #faf5ec 55%, #f3e7d4 100%);
+    box-shadow:
+        0 26px 60px -28px rgba(34, 13, 10, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    overflow: hidden;
+}
+
+/* Kanvas WebGL mengisi penuh wadah, kursor diganti pointer agar terasa hidup. */
+.nasi-sambel-3d {
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: grab;
+}
+
+.nasi-sambel-3d:active {
+    cursor: grabbing;
+}
+
+/* Fallback disembunyikan begitu WebGL benar-benar berjalan. */
+.nasi-sambel-fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #220d0a;
+    padding: 1.5rem;
+}
+
+.nasi-sambel-3d-wrap:has(canvas) .nasi-sambel-fallback {
+    display: none;
+}
+
+/* Hormati pengaturan sistem pengguna yang membatasi animasi. */
+@media (prefers-reduced-motion: reduce) {
+    .nasi-sambel-3d {
+        cursor: default;
+    }
+}
+
+/* --- 11. Hover tabel: baris terangkat dan miring mengikuti arah kursor ---
+ *
+ * Transform sengaja dipasang pada <td>, bukan pada <tr>. Chrome dan Safari
+ * tidak merender transform pada elemen <tr>, jadi kalau dipasang di sana
+ * animasi diam-diam tidak berjalan di browser yang paling sering dipakai.
+ * sudut miring dikirim dari JavaScript lewat variabel --tilt.
+ */
+.madang-table tbody tr > td {
+    transition:
+        background-color 0.18s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.madang-table tbody tr:hover > td {
+    background-color: #f7ead7;
+    box-shadow: 0 10px 22px -12px rgba(34, 13, 10, 0.55);
+    transform: translateY(-3px) rotateX(var(--tilt, 0deg));
+    z-index: 1;
+    position: relative;
+}
+
+/* Garis oranye ember di sisi kiri baris yang sedang disorot. */
+.madang-table tbody tr:hover > td:first-child {
+    box-shadow:
+        inset 4px 0 0 var(--madang-ember),
+        0 10px 22px -12px rgba(34, 13, 10, 0.55);
+}
+
+/* Sisi kanan dibuatkan bayangan sendiri supaya garis kanan tetap rata. */
+.madang-table tbody tr:hover > td:last-child {
+    box-shadow: 0 10px 22px -12px rgba(34, 13, 10, 0.55);
+}
+
+/* Hormati sistem pengguna yang membatasi animasi. */
+@media (prefers-reduced-motion: reduce) {
+    .madang-table tbody tr:hover > td {
+        transform: none;
+    }
+}

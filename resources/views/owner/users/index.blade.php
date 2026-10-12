@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <h2 class="font-semibold text-xl text-gray-800">Manajemen Pengguna</h2>
-            <a href="{{ route('owner.users.create') }}" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+            <a href="{{ route('owner.users.create') }}" class="bg-brand-700 text-white px-4 py-2 rounded-lg hover:bg-brand-800 transition">
                 Tambah Pengguna
             </a>
         </div>
@@ -27,7 +27,7 @@
                 <div class="flex flex-wrap items-center gap-3">
                     <div class="flex gap-2">
                         <a href="{{ route('owner.users.index') }}" class="px-3 py-1.5 rounded-full text-sm {{ !request('role') ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-700' }}">Semua</a>
-                        <a href="{{ route('owner.users.index', ['role' => 'pelanggan']) }}" class="px-3 py-1.5 rounded-full text-sm {{ request('role') === 'pelanggan' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700' }}">Pelanggan ({{ $counts['pelanggan'] }})</a>
+                        <a href="{{ route('owner.users.index', ['role' => 'pelanggan']) }}" class="px-3 py-1.5 rounded-full text-sm {{ request('role') === 'pelanggan' ? 'bg-brand-700 text-white' : 'bg-gray-100 text-gray-700' }}">Pelanggan ({{ $counts['pelanggan'] }})</a>
                         <a href="{{ route('owner.users.index', ['role' => 'karyawan']) }}" class="px-3 py-1.5 rounded-full text-sm {{ request('role') === 'karyawan' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700' }}">Karyawan ({{ $counts['karyawan'] }})</a>
                         <a href="{{ route('owner.users.index', ['role' => 'owner']) }}" class="px-3 py-1.5 rounded-full text-sm {{ request('role') === 'owner' ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-700' }}">Owner ({{ $counts['owner'] }})</a>
                     </div>
@@ -40,7 +40,7 @@
             </div>
 
             <div class="bg-white shadow rounded-lg overflow-hidden">
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="madang-table min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pengguna</th>

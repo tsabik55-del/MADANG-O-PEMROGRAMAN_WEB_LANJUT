@@ -7,59 +7,64 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="madang-hero madang-stripes madang-stripes-animated rounded-2xl p-6 sm:p-8 mb-8 text-cream shadow-lg hero-animate">
+                <p class="font-term text-xs tracking-[0.25em] text-cream/70">MADANG-O // OWNER</p>
+                <h2 class="text-2xl sm:text-3xl font-extrabold mt-1">Pusat Komando Warung</h2>
+                <p class="text-cream/80 text-sm mt-1">Kelola menu, pantau pesanan &amp; pengguna dalam satu dasbor.</p>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white overflow-hidden shadow rounded-lg p-6">
+                <div class="bg-white overflow-hidden shadow rounded-lg p-6 border-t-4 border-brand-700">
                     <div class="flex items-center">
-                        <div class="bg-green-100 p-3 rounded-lg">
-                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="bg-brand-100 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm text-gray-500">Total Menu</p>
-                            <p class="text-2xl font-bold text-gray-800">{{ $stats['total_menus'] }}</p>
+                            <p class="font-term text-xs tracking-widest text-gray-500">TOTAL_MENU</p>
+                            <p class="text-2xl font-bold text-gray-800 font-term">{{ $stats['total_menus'] }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white overflow-hidden shadow rounded-lg p-6">
+                <div class="bg-white overflow-hidden shadow rounded-lg p-6 border-t-4 border-brand-700">
                     <div class="flex items-center">
-                        <div class="bg-blue-100 p-3 rounded-lg">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="bg-brand-100 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm text-gray-500">Total Pesanan</p>
-                            <p class="text-2xl font-bold text-gray-800">{{ $stats['total_orders'] }}</p>
+                            <p class="font-term text-xs tracking-widest text-gray-500">TOTAL_PESANAN</p>
+                            <p class="text-2xl font-bold text-gray-800 font-term">{{ $stats['total_orders'] }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white overflow-hidden shadow rounded-lg p-6">
+                <div class="bg-white overflow-hidden shadow rounded-lg p-6 border-t-4 border-brand-700">
                     <div class="flex items-center">
-                        <div class="bg-yellow-100 p-3 rounded-lg">
-                            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="bg-brand-100 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0v6v0" />
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm text-gray-500">Total Pelanggan</p>
-                            <p class="text-2xl font-bold text-gray-800">{{ $stats['total_pelanggan'] }}</p>
+                            <p class="font-term text-xs tracking-widest text-gray-500">TOTAL_PELANGGAN</p>
+                            <p class="text-2xl font-bold text-gray-800 font-term">{{ $stats['total_pelanggan'] }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white overflow-hidden shadow rounded-lg p-6">
+                <div class="bg-white overflow-hidden shadow rounded-lg p-6 border-t-4 border-brand-700">
                     <div class="flex items-center">
-                        <div class="bg-purple-100 p-3 rounded-lg">
-                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="bg-brand-100 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm text-gray-500">Pendapatan (Lunas)</p>
-                            <p class="text-2xl font-bold text-gray-800">Rp{{ number_format($stats['total_pendapatan'], 0, ',', '.') }}</p>
+                            <p class="font-term text-xs tracking-widest text-gray-500">PENDAPATAN_LUNAS</p>
+                            <p class="text-2xl font-bold text-gray-800 font-term">Rp{{ number_format($stats['total_pendapatan'], 0, ',', '.') }}</p>
                         </div>
                     </div>
                 </div>

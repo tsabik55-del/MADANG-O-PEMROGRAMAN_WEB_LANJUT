@@ -32,7 +32,7 @@
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">Total</p>
-                        <p class="font-medium text-green-600">Rp{{ number_format($order->total_price, 0, ',', '.') }}</p>
+                        <p class="font-medium text-brand-700 font-term">Rp{{ number_format($order->total_price, 0, ',', '.') }}</p>
                     </div>
                 </div>
 
@@ -79,7 +79,7 @@
 
             <div class="bg-white shadow rounded-lg p-6">
                 <h3 class="text-lg font-semibold mb-4">Item Pesanan</h3>
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="madang-table min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Menu</th>
@@ -101,7 +101,7 @@
                     <tfoot class="bg-gray-50">
                         <tr>
                             <td colspan="3" class="px-6 py-3 text-right font-semibold">Total</td>
-                            <td class="px-6 py-3 font-bold text-green-600">Rp{{ number_format($order->total_price, 0, ',', '.') }}</td>
+                            <td class="px-6 py-3 font-bold text-brand-700 font-term">Rp{{ number_format($order->total_price, 0, ',', '.') }}</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -114,4 +114,18 @@
             </div>
         </div>
     </div>
+
+    {{-- Pesanan baru saja dibuat: keranjang di browser harus dikosongkan agar
+         isi yang sudah dipesan tidak terbawa lagi saat pelanggan memesan lagi. --}}
+    @if(session('cart_cleared'))
+        @push('scripts')
+            <script>
+                try {
+                    localStorage.removeItem('madango_cart_{{ Auth::id() }}');
+                } catch (e) {
+                    // localStorage tidak tersedia (mode privat) — abaikan saja.
+                }
+            </script>
+        @endpush
+    @endif
 </x-app-layout>
