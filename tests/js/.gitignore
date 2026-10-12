@@ -1,0 +1,3 @@
+# Hasil pratinjau 3D. Di-regenerate dengan:
+#   node tests/js/preview-nasi.mjs
+*.png
