@@ -343,3 +343,29 @@ html {
         transform: none;
     }
 }
+
+/* --- 12. Teks "memuat piring 3D..." selagi three.js diunduh ---
+ *
+ * Keadaan disimpan sebagai atribut data-nasi-sambel pada wadahnya oleh
+ * resources/js/hero-nasi.js, jadi teks ini tidak perlu dikendalikan dari
+ * JavaScript.
+ */
+.nasi-sambel-memuat {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: rgb(34 13 10 / 0.55);
+    pointer-events: none;
+}
+
+/* Sembunyikan begitu scene siap, gagal dimuat, atau WebGL tidak tersedia. */
+.nasi-sambel-3d-wrap[data-nasi-sambel="siap"] .nasi-sambel-memuat,
+.nasi-sambel-3d-wrap[data-nasi-sambel="gagal"] .nasi-sambel-memuat,
+.nasi-sambel-3d-wrap[data-nasi-sambel="tanpa-webgl"] .nasi-sambel-memuat {
+    display: none;
+}

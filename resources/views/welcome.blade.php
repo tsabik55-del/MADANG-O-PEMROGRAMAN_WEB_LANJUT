@@ -63,6 +63,10 @@
                          role="img"
                          aria-label="Ilustrasi piring nasi sambel tiga dimensi"></div>
 
+                    {{-- Ditampilkan selagi three.js (sekitar 190 KB) diunduh,
+                         lalu disembunyikan otomatis lewat atribut data di atas. --}}
+                    <p class="nasi-sambel-memuat">memuat piring 3D…</p>
+
                     {{-- Tampil kalau WebGL tidak tersedia, supaya halaman tidak kosong. --}}
                     <div class="nasi-sambel-fallback">
                         <span class="text-6xl" aria-hidden="true">🍚</span>

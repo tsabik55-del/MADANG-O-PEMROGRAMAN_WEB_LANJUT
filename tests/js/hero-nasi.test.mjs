@@ -24,28 +24,68 @@ function uji(nama, fn) {
     }
 }
 
-const { scene, piringGroup } = buildNasiScene(THREE);
+const { scene, grupMiring, piringGroup } = buildNasiScene(THREE);
 
-uji('scene dan piringGroup terbentuk', () => {
+uji('scene, grupMiring, dan piringGroup terbentuk', () => {
     assert.ok(scene instanceof THREE.Scene, 'scene harus THREE.Scene');
+    assert.ok(grupMiring instanceof THREE.Group, 'grupMiring harus THREE.Group');
     assert.ok(piringGroup instanceof THREE.Group, 'piringGroup harus THREE.Group');
 });
 
-uji('piring ditambahkan ke scene', () => {
-    assert.ok(scene.children.includes(piringGroup), 'piringGroup harus anak dari scene');
+uji('grup bersarang: grupMiring > piringGroup > scene', () => {
+    assert.ok(scene.children.includes(grupMiring), 'grupMiring harus anak langsung dari scene');
+    assert.ok(
+        grupMiring.children.includes(piringGroup),
+        'piringGroup harus anak dari grupMiring, bukan anak scene'
+    );
+    assert.ok(
+        !scene.children.includes(piringGroup),
+        'piringGroup tidak boleh anak langsung scene karena ruin sumbu putar dan miring'
+    );
+});
+
+uji('sumbu putar dan sumbu miring terpisah', () => {
+    // Memutar piringGroup tidak boleh mengubah rotation grup luar, dan
+    // sebaliknya. Kalau keduanya satu grup, keduanya saling menimpa.
+    piringGroup.rotation.y = 0.5;
+    assert.equal(grupMiring.rotation.y, 0, 'putar grup dalam bocor ke grup luar');
+
+    grupMiring.rotation.y = 0.3;
+    assert.equal(piringGroup.rotation.y, 0.5, 'miring grup luar menimpa putar grup dalam');
 });
 
 uji('ada piring, nasi, sambel, dan bumbu', () => {
     // Langsung di piringGroup: badan piring, lipatan, nasi, sambal,
-    // grup kerupuk, dan kerupuk kuning.
-    assert.equal(piringGroup.children.length, 6, 'jumlah anak langsung piringGroup tidak sesuai');
+    // grup kerupuk, kerupuk kuning, taburan cabai, taburan sesame.
+    assert.equal(piringGroup.children.length, 8, 'jumlah anak langsung piringGroup tidak sesuai');
 
-    // Total semua mesh termasuk 3 kerupuk di dalam grup.
     let jumlahMesh = 0;
     piringGroup.traverse((obj) => {
         if (obj.isMesh) jumlahMesh++;
     });
-    assert.equal(jumlahMesh, 8, 'total mesh harus 8');
+    // badan piring 1 + lipatan 1 + nasi 1 + sambal 1 + kerupuk 3
+    // + kerupuk kuning 1 + cabai 7 + sesame 14 = 29
+    assert.equal(jumlahMesh, 29, 'total mesh harus 29');
+});
+
+uji('semua mesh memakai MeshPhysicalMaterial', () => {
+    piringGroup.traverse((obj) => {
+        if (!obj.isMesh) return;
+        assert.ok(
+            obj.material instanceof THREE.MeshPhysicalMaterial,
+            `mesh ${obj.geometry.type} harus memakai MeshPhysicalMaterial agar bisa clearcoat/sheen`
+        );
+    });
+});
+
+uji('jalur tanpa tekstur tetap bisa dibangun', () => {
+    // buildNasiScene() harus tetap jalan saat dipanggil tanpa argumen
+    // tekstur (dipakai uji Node, yang tidak punya DOM).
+    const polos = buildNasiScene(THREE);
+    assert.ok(polos.piringGroup, 'scene tanpa tekstur harus tetap terbentuk');
+    polos.piringGroup.traverse((obj) => {
+        if (obj.isMesh) assert.equal(obj.material.map, null, 'peta warna harus null tanpa tekstur');
+    });
 });
 
 uji('tidak ada posisi vertex NaN', () => {
