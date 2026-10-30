@@ -15,40 +15,40 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen bg-cream flex items-center justify-center p-4 sm:p-8">
+        <div class="min-h-screen bg-gray-50 flex items-center justify-center p-4 sm:p-8">
             <div class="w-full max-w-4xl grid md:grid-cols-2 overflow-hidden rounded-2xl shadow-2xl">
                 <!-- Panel merek: full-bleed sambal -->
-                <div class="madang-hero madang-stripes hidden md:flex flex-col justify-between p-8 text-cream">
+                <div class="hidden md:flex flex-col justify-between p-8 text-white bg-gradient-to-br from-red-800 via-red-900 to-red-950">
                     <div>
                         <a href="/" class="flex items-center gap-3">
-                            <x-application-logo class="w-11 h-11 text-cream" />
+                            <x-application-logo class="w-11 h-11 text-white" />
                             <span class="font-term text-lg font-bold tracking-[0.25em]">MADANG-O</span>
                         </a>
-                        <p class="font-term text-xs tracking-[0.25em] text-cream/70 mt-8">SEGO SAMBEL MBAK TATIK</p>
+                        <p class="font-term text-xs tracking-[0.25em] text-white/70 mt-8">SEGO SAMBEL MBAK TATIK</p>
                         <h1 class="text-3xl font-extrabold leading-tight mt-2">Pesan sego sambel<br>praktis, tanpa<br>antre di loket.</h1>
                     </div>
                     <ul class="space-y-3.5 text-sm mt-10">
                         <li class="flex items-start gap-3">
                             <span class="text-xl">🍚</span>
-                            <span class="text-cream/85">Menu harian &amp; paket katering lengkap dengan harga.</span>
+                            <span class="text-white/85">Menu harian &amp; paket katering lengkap dengan harga.</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <span class="text-xl">🛒</span>
-                            <span class="text-cream/85">Masukkan keranjang, atur jadwal ambil, konfirmasi.</span>
+                            <span class="text-white/85">Masukkan keranjang, atur jadwal ambil, konfirmasi.</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <span class="text-xl">💵</span>
-                            <span class="text-cream/85">Bayar tunai, transfer, atau QRIS saat taking.</span>
+                            <span class="text-white/85">Bayar tunai, transfer, atau QRIS saat taking.</span>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Panel formulir -->
-                <div class="bg-paper p-6 sm:p-10">
+                <div class="bg-white p-6 sm:p-10">
                     <div class="md:hidden flex items-center gap-2 mb-6">
                         <a href="/" class="flex items-center gap-2">
                             <x-application-logo class="w-9 h-9 text-brand-700" />
-                            <span class="font-term text-base font-bold tracking-[0.25em] text-coal">MADANG-O</span>
+                            <span class="font-term text-base font-bold tracking-[0.25em] text-gray-900">MADANG-O</span>
                         </a>
                     </div>
                     {{ $slot }}

@@ -7,10 +7,10 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="madang-hero madang-stripes madang-stripes-animated rounded-2xl p-6 sm:p-8 mb-8 text-cream shadow-lg hero-animate">
-                <p class="font-term text-xs tracking-[0.25em] text-cream/70">MADANG-O // OWNER</p>
+            <div class="rounded-2xl p-6 sm:p-8 mb-8 text-white shadow-lg hero-animate bg-gradient-to-br from-red-800 via-red-900 to-red-950">
+                <p class="font-term text-xs tracking-[0.25em] text-amber-300">MADANG-O // OWNER</p>
                 <h2 class="text-2xl sm:text-3xl font-extrabold mt-1">Pusat Komando Warung</h2>
-                <p class="text-cream/80 text-sm mt-1">Kelola menu, pantau pesanan &amp; pengguna dalam satu dasbor.</p>
+                <p class="text-white/80 text-sm mt-1">Kelola menu, pantau pesanan &amp; pengguna dalam satu dasbor.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <div class="bg-white overflow-hidden shadow rounded-lg p-6 border-t-4 border-brand-700">

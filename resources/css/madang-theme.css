@@ -1,17 +1,12 @@
 /* ============================================================
-   MADANG-O theme layer — adaptasi gaya Hermes Agent
-   (full-bleed warna berani + teks terang + aksen mono/terminal)
-   Warna primer: merah sambal (pengganti biru elektrik #0000f2)
+   MADANG-O theme layer
+   Palet mengikuti desain acuan tim: merah (red), amber, abu-abu
+   (gray), dan putih. Tidak ada pola garis, cream, atau animasi 3D.
    ============================================================ */
 
 :root {
-    --madang-brand: #a50d27;
-    --madang-brand-dark: #7e0a1f;
-    --madang-brand-deep: #560614;
-    --madang-coal: #220d0a;
-    --madang-cream: #faf5ec;
-    --madang-paper: #fffdf8;
-    --madang-ember: #e4572e;
+    --madang-brand: #b91c1c;
+    --madang-ember: #f59e0b;
 }
 
 ::selection {
@@ -19,29 +14,7 @@
     color: #fff;
 }
 
-/* Hero full-bleed ala Hermes: gradasi sambal + pola garis halus.
-   PENTING: semua lapis background harus dalam SATU deklarasi —
-   class terpisah yang menyetel background-image akan menimpa warna. */
-.madang-hero {
-    background-color: #a50d27;
-    background-image:
-        repeating-linear-gradient(
-            -45deg,
-            rgba(255, 255, 255, 0.05) 0 12px,
-            transparent 12px 26px
-        ),
-        radial-gradient(1200px 400px at 85% -10%, rgba(228, 87, 46, 0.35), transparent 60%),
-        radial-gradient(900px 380px at -10% 110%, rgba(0, 0, 0, 0.35), transparent 55%),
-        linear-gradient(135deg, #c8102e 0%, #a50d27 45%, #560614 100%);
-}
-
-/* Alias pola garis — dikosongkan supaya tidak menimpa .madang-hero.
-   Pola sudah menyatu di dalam .madang-hero di atas. */
-.madang-stripes {
-    /* pola garis: lihat .madang-hero */
-}
-
-/* Kartu nomor ala seksi "#1..#6" Hermes */
+/* Kartu nomor ala seksi "#1..#6" */
 .madang-index {
     font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     letter-spacing: 0.2em;
@@ -49,7 +22,7 @@
 
 /* Garis tepi tiket/nota */
 .madang-ticket {
-    --notch: #faf5ec;
+    --notch: #f9fafb;
     background-image:
         radial-gradient(circle at 0 50%, var(--notch) 9px, transparent 10px),
         radial-gradient(circle at 100% 50%, var(--notch) 9px, transparent 10px);
@@ -81,7 +54,7 @@ html {
     scroll-behavior: smooth;
 }
 
-/* --- 5. Reveal saat scroll (dikendalikan IntersectionObserver) ---
+/* --- Reveal saat scroll (dikendalikan IntersectionObserver) ---
    PENTING: state "tersembunyi" hanya berlaku kalau JS aktif (html.js-reveal).
    Tanpa JS, konten tetap terlihat — tidak pernah hilang permanen. */
 .js-reveal .reveal {
@@ -121,7 +94,7 @@ html {
 .js-reveal .reveal-stagger.is-visible > *:nth-child(8) { transition-delay: 0.44s; }
 .js-reveal .reveal-stagger.is-visible > *:nth-child(9) { transition-delay: 0.5s; }
 
-/* --- 6. Hero: masuk dengan fade-turun --- */
+/* --- Hero: masuk dengan fade-turun --- */
 @keyframes hero-rise {
     from {
         opacity: 0;
@@ -145,21 +118,7 @@ html {
 .hero-animate > *:nth-child(3) { animation-delay: 0.25s; }
 .hero-animate > *:nth-child(4) { animation-delay: 0.35s; }
 
-/* --- 7. Garis dekoratif bergeser pelan (efek "live") --- */
-@keyframes stripe-drift {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 52px 0;
-    }
-}
-
-.madang-stripes-animated {
-    animation: stripe-drift 9s linear infinite;
-}
-
-/* --- 8. Hover halus pada kartu & tombol --- */
+/* --- Hover halus pada kartu & tombol --- */
 .hover-lift {
     transition:
         transform 0.2s ease,
@@ -168,59 +127,10 @@ html {
 
 .hover-lift:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 28px -14px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 12px 28px -14px rgba(17, 24, 39, 0.35);
 }
 
-/* --- 10. Piring nasi sambel 3D di halaman depan --- */
-.nasi-sambel-3d-wrap {
-    position: relative;
-    width: 100%;
-    height: clamp(260px, 42vw, 380px);
-    border-radius: 1rem;
-    background: linear-gradient(160deg, #fffdf8 0%, #faf5ec 55%, #f3e7d4 100%);
-    box-shadow:
-        0 26px 60px -28px rgba(34, 13, 10, 0.55),
-        inset 0 1px 0 rgba(255, 255, 255, 0.7);
-    overflow: hidden;
-}
-
-/* Kanvas WebGL mengisi penuh wadah, kursor diganti pointer agar terasa hidup. */
-.nasi-sambel-3d {
-    width: 100%;
-    height: 100%;
-    display: block;
-    cursor: grab;
-}
-
-.nasi-sambel-3d:active {
-    cursor: grabbing;
-}
-
-/* Fallback disembunyikan begitu WebGL benar-benar berjalan. */
-.nasi-sambel-fallback {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #220d0a;
-    padding: 1.5rem;
-}
-
-.nasi-sambel-3d-wrap:has(canvas) .nasi-sambel-fallback {
-    display: none;
-}
-
-/* Hormati pengaturan sistem pengguna yang membatasi animasi. */
-@media (prefers-reduced-motion: reduce) {
-    .nasi-sambel-3d {
-        cursor: default;
-    }
-}
-
-/* --- 11. Hover tabel: baris terangkat dan miring mengikuti arah kursor ---
+/* --- Hover tabel: baris terangkat dan miring mengikuti arah kursor ---
  *
  * Transform sengaja dipasang pada <td>, bukan pada <tr>. Chrome dan Safari
  * tidak merender transform pada elemen <tr>, jadi kalau dipasang di sana
@@ -235,23 +145,23 @@ html {
 }
 
 .madang-table tbody tr:hover > td {
-    background-color: #f7ead7;
-    box-shadow: 0 10px 22px -12px rgba(34, 13, 10, 0.55);
+    background-color: #fef2f2;
+    box-shadow: 0 10px 22px -12px rgba(17, 24, 39, 0.45);
     transform: translateY(-3px) rotateX(var(--tilt, 0deg));
     z-index: 1;
     position: relative;
 }
 
-/* Garis oranye ember di sisi kiri baris yang sedang disorot. */
+/* Garis amber di sisi kiri baris yang sedang disorot. */
 .madang-table tbody tr:hover > td:first-child {
     box-shadow:
         inset 4px 0 0 var(--madang-ember),
-        0 10px 22px -12px rgba(34, 13, 10, 0.55);
+        0 10px 22px -12px rgba(17, 24, 39, 0.45);
 }
 
 /* Sisi kanan dibuatkan bayangan sendiri supaya garis kanan tetap rata. */
 .madang-table tbody tr:hover > td:last-child {
-    box-shadow: 0 10px 22px -12px rgba(34, 13, 10, 0.55);
+    box-shadow: 0 10px 22px -12px rgba(17, 24, 39, 0.45);
 }
 
 /* Hormati sistem pengguna yang membatasi animasi. */
@@ -259,30 +169,4 @@ html {
     .madang-table tbody tr:hover > td {
         transform: none;
     }
-}
-
-/* --- 12. Teks "memuat piring 3D..." selagi three.js diunduh ---
- *
- * Keadaan disimpan sebagai atribut data-nasi-sambel pada wadahnya oleh
- * resources/js/hero-nasi.js, jadi teks ini tidak perlu dikendalikan dari
- * JavaScript.
- */
-.nasi-sambel-memuat {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    color: rgb(34 13 10 / 0.55);
-    pointer-events: none;
-}
-
-/* Sembunyikan begitu scene siap, gagal dimuat, atau WebGL tidak tersedia. */
-.nasi-sambel-3d-wrap[data-nasi-sambel="siap"] .nasi-sambel-memuat,
-.nasi-sambel-3d-wrap[data-nasi-sambel="gagal"] .nasi-sambel-memuat,
-.nasi-sambel-3d-wrap[data-nasi-sambel="tanpa-webgl"] .nasi-sambel-memuat {
-    display: none;
 }

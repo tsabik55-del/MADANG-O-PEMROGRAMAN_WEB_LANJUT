@@ -5,22 +5,6 @@ window.Alpine = Alpine;
 Alpine.start();
 
 /**
- * Piring nasi sambel 3D di halaman depan.
- *
- * Modul ini diimpor secara dinamis supaya three.js (sekitar 190 KB gzip)
- * tidak ikut masuk ke bundle yang dimuat setiap halaman. Browser baru
- * mengunduhnya kalau halaman depan benar-benar memanggil fungsi di bawah.
- */
-window.madangNasiSambel = function (el) {
-    import('./hero-nasi.js')
-        .then((mod) => mod.initNasiSambel(el))
-        .catch(() => {
-            // three.js gagal dimuat atau WebGL tidak tersedia.
-            // Fallback di dalam halaman tetap menampilkannya.
-        });
-};
-
-/**
  * Efek hover tabel: baris terangkat dan miring mengikuti posisi kursor.
  *
  * Didaftarkan satu kali untuk seluruh halaman, bukan di setiap view. Sudut

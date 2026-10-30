@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-coal border-b-4 border-brand-700">
+<nav x-data="{ open: false }" class="bg-red-900 border-b-4 border-red-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -14,11 +14,11 @@
                             };
                         @endphp
                         <a href="{{ route($homeRoute) }}">
-                            <span class="flex items-center gap-2"><x-application-logo class="block h-9 w-auto text-brand-400" /><span class="font-term text-sm font-bold tracking-[0.25em] text-cream">MADANG-O</span></span>
+                            <span class="flex items-center gap-2"><x-application-logo class="block h-9 w-auto text-amber-400" /><span class="font-term text-sm font-bold tracking-[0.25em] text-white">MADANG-O</span></span>
                         </a>
                     @else
                         <a href="{{ route('login') }}">
-                            <span class="flex items-center gap-2"><x-application-logo class="block h-9 w-auto text-brand-400" /><span class="font-term text-sm font-bold tracking-[0.25em] text-cream">MADANG-O</span></span>
+                            <span class="flex items-center gap-2"><x-application-logo class="block h-9 w-auto text-amber-400" /><span class="font-term text-sm font-bold tracking-[0.25em] text-white">MADANG-O</span></span>
                         </a>
                     @endif
                 </div>
@@ -65,16 +65,16 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-cream/80 bg-transparent hover:text-white focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white/80 bg-transparent hover:text-white focus:outline-none transition ease-in-out duration-150">
                             <div class="flex items-center gap-2">
                                 <span>{{ Auth::user()->name }}</span>
                                 <span class="px-2 py-0.5 text-xs font-medium rounded-full
                                     @if(Auth::user()->role === 'owner')
-                                        bg-purple-100 text-purple-800
+                                        bg-amber-300 text-amber-950
                                     @elseif(Auth::user()->role === 'karyawan')
-                                        bg-blue-100 text-blue-800
+                                        bg-red-700 text-white
                                     @else
-                                        bg-green-100 text-green-800
+                                        bg-white text-red-900
                                     @endif">
                                     {{ ucfirst(Auth::user()->role) }}
                                 </span>
@@ -104,10 +104,10 @@
             </div>
             @else
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <a href="{{ route('login') }}" class="text-cream/70 hover:text-white px-3 py-2 text-sm font-medium">
+                <a href="{{ route('login') }}" class="text-white/70 hover:text-white px-3 py-2 text-sm font-medium">
                     {{ __('Log in') }}
                 </a>
-                <a href="{{ route('register') }}" class="bg-brand-700 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-brand-600">
+                <a href="{{ route('register') }}" class="bg-amber-500 text-red-950 px-4 py-2 rounded-md text-sm font-medium hover:bg-amber-400">
                     {{ __('Register') }}
                 </a>
             </div>
@@ -115,7 +115,7 @@
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-cream/70 hover:text-white hover:bg-white/10 focus:outline-none focus:bg-white/10 focus:text-white transition duration-150 ease-in-out">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-white/70 hover:text-white hover:bg-white/10 focus:outline-none focus:bg-white/10 focus:text-white transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -166,16 +166,16 @@
         <div class="pt-4 pb-1 border-t border-white/10">
             @if(auth()->check())
                 <div class="px-4">
-                    <div class="font-medium text-base text-cream">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-cream/60">{{ Auth::user()->email }}</div>
+                    <div class="font-medium text-base text-white">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-sm text-white/60">{{ Auth::user()->email }}</div>
                     <div class="mt-1 inline-flex">
                         <span class="px-2 py-0.5 text-xs font-medium rounded-full
                             @if(Auth::user()->role === 'owner')
-                                bg-purple-100 text-purple-800
+                                bg-amber-300 text-amber-950
                             @elseif(Auth::user()->role === 'karyawan')
-                                bg-blue-100 text-blue-800
+                                bg-red-700 text-white
                             @else
-                                bg-green-100 text-green-800
+                                bg-white text-red-900
                             @endif">
                             {{ ucfirst(Auth::user()->role) }}
                         </span>
@@ -196,10 +196,10 @@
                 </div>
             @else
                 <div class="px-4 space-y-2">
-                    <a href="{{ route('login') }}" class="block px-3 py-2 text-base font-medium text-cream/70 hover:text-white">
+                    <a href="{{ route('login') }}" class="block px-3 py-2 text-base font-medium text-white/70 hover:text-white">
                         {{ __('Log in') }}
                     </a>
-                    <a href="{{ route('register') }}" class="block px-3 py-2 text-base font-medium text-white bg-brand-700 rounded-md hover:bg-brand-600">
+                    <a href="{{ route('register') }}" class="block px-3 py-2 text-base font-medium text-red-950 bg-amber-500 rounded-md hover:bg-amber-400">
                         {{ __('Register') }}
                     </a>
                 </div>

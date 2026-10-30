@@ -13,6 +13,6 @@ return [
     |
     */
 
-    'whatsapp' => env('MADANG_WHATSAPP', '6281234567890'),
+    'whatsapp' => env('MADANG_WHATSAPP', '6285707149142'),
 
 ];

@@ -27,7 +27,7 @@
 
     {{-- 1. SIDEBAR KIRI --}}
     <aside :class="sidebarBuka ? 'translate-x-0' : '-translate-x-full'"
-           class="fixed inset-y-0 left-0 z-30 flex w-64 flex-col justify-between bg-gradient-to-b from-brand-700 via-brand-800 to-brand-950 p-4 text-white shadow-2xl transition-transform duration-300 lg:translate-x-0">
+           class="fixed inset-y-0 left-0 z-30 flex w-64 flex-col justify-between bg-gradient-to-b from-brand-800 via-brand-900 to-brand-950 p-4 text-white shadow-2xl transition-transform duration-300 lg:translate-x-0">
 
         <div>
             {{-- Logo & branding --}}
@@ -52,8 +52,8 @@
                 <a href="{{ route('pelanggan.dashboard') }}"
                    class="w-full flex items-center space-x-2.5 px-3.5 py-2.5 rounded-xl text-xs transition
                           {{ request()->routeIs('pelanggan.dashboard')
-                                ? 'bg-brand-600/80 border-l-4 border-amber-400 text-white font-bold shadow-md'
-                                : 'text-red-100 hover:bg-brand-700/50 border-l-4 border-transparent' }}">
+                                ? 'bg-brand-700/80 border-l-4 border-amber-400 text-white font-bold shadow-md'
+                                : 'text-red-100 hover:bg-brand-800/50 border-l-4 border-transparent' }}">
                     <span class="text-amber-400 font-bold">🍴</span>
                     <span>Menu &amp; Pesan</span>
                 </a>
@@ -61,8 +61,8 @@
                 <a href="{{ route('pelanggan.orders.index') }}"
                    class="w-full flex items-center space-x-2.5 px-3.5 py-2.5 rounded-xl text-xs transition
                           {{ request()->routeIs('pelanggan.orders.*')
-                                ? 'bg-brand-600/80 border-l-4 border-amber-400 text-white font-bold shadow-md'
-                                : 'text-red-100 hover:bg-brand-700/50 border-l-4 border-transparent' }}">
+                                ? 'bg-brand-700/80 border-l-4 border-amber-400 text-white font-bold shadow-md'
+                                : 'text-red-100 hover:bg-brand-800/50 border-l-4 border-transparent' }}">
                     <span class="text-amber-400 font-bold">🔄</span>
                     <span>Riwayat Pesanan</span>
                 </a>

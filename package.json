@@ -19,8 +19,5 @@
     },
     "optionalDependencies": {
         "@laravel/multiplex": "^0.4.1"
-    },
-    "dependencies": {
-        "three": "^0.186.1"
     }
 }
