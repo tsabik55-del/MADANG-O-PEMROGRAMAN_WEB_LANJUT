@@ -1,122 +1,120 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800">Detail Pesanan</h2>
-            <a href="{{ route('pelanggan.orders.index') }}" class="text-gray-500 hover:text-gray-700">Kembali</a>
+<x-pelanggan-layout title="Detail Pesanan">
+    <div class="mx-auto w-full max-w-3xl">
+
+        <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+            <div>
+                <h1 class="text-lg font-black text-gray-800">Detail Pesanan</h1>
+                <p class="text-[11px] text-gray-500">Nomor <span class="font-bold text-brand-800">{{ $order->order_number }}</span></p>
+            </div>
+            <a href="{{ route('pelanggan.orders.index') }}"
+               class="rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-bold text-gray-700 shadow-sm transition hover:bg-gray-50">
+                ← Kembali
+            </a>
         </div>
-    </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow rounded-lg p-6 mb-6">
-                <div class="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <p class="text-sm text-gray-500">No. Pesanan</p>
-                        <p class="font-medium">{{ $order->order_number }}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Pelanggan</p>
-                        <p class="font-medium">{{ $order->customer_name }}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Telepon</p>
-                        <p class="font-medium">{{ $order->phone }}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Waktu Ambil</p>
-                        <p class="font-medium">{{ $order->pickup_datetime->format('d/m/Y H:i') }}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Metode Bayar</p>
-                        <p class="font-medium capitalize">{{ $order->payment_method }}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Total</p>
-                        <p class="font-medium text-brand-700 font-term">Rp{{ number_format($order->total_price, 0, ',', '.') }}</p>
-                    </div>
+        <div class="mb-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Pelanggan</p>
+                    <p class="text-xs font-bold text-gray-800">{{ $order->customer_name }}</p>
                 </div>
-
-                <div class="border-t pt-4">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <p class="text-sm text-gray-500">Status Pembayaran</p>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                @if($order->payment_status === 'lunas')
-                                    bg-green-100 text-green-800
-                                @else
-                                    bg-yellow-100 text-yellow-800
-                                @endif">
-                                {{ ucfirst(str_replace('_', ' ', $order->payment_status)) }}
-                            </span>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500">Status Ambil</p>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                @if($order->pickup_status === 'sudah_diambil')
-                                    bg-green-100 text-green-800
-                                @else
-                                    bg-blue-100 text-blue-800
-                                @endif">
-                                {{ ucfirst(str_replace('_', ' ', $order->pickup_status)) }}
-                            </span>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500">Status Pesanan</p>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                @if($order->status === 'selesai')
-                                    bg-green-100 text-green-800
-                                @elseif($order->status === 'dibatalkan')
-                                    bg-red-100 text-red-800
-                                @else
-                                    bg-indigo-100 text-indigo-800
-                                @endif">
-                                {{ ucfirst(str_replace('_', ' ', $order->status)) }}
-                            </span>
-                        </div>
-                    </div>
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Telepon</p>
+                    <p class="text-xs font-bold text-gray-800">{{ $order->phone }}</p>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Waktu Ambil</p>
+                    <p class="text-xs font-bold text-gray-800">{{ $order->pickup_datetime->format('d/m/Y H:i') }}</p>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Metode Bayar</p>
+                    <p class="text-xs font-bold capitalize text-gray-800">{{ $order->payment_method }}</p>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Total</p>
+                    <p class="text-sm font-black text-brand-800">Rp{{ number_format($order->total_price, 0, ',', '.') }}</p>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Status Pesanan</p>
+                    <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold
+                        @if($order->status === 'selesai') bg-emerald-100 text-emerald-800
+                        @elseif($order->status === 'dibatalkan') bg-red-100 text-red-800
+                        @else bg-indigo-100 text-indigo-800 @endif">
+                        {{ ucfirst(str_replace('_', ' ', $order->status)) }}
+                    </span>
                 </div>
             </div>
 
-            <div class="bg-white shadow rounded-lg p-6">
-                <h3 class="text-lg font-semibold mb-4">Item Pesanan</h3>
+            <div class="mt-4 grid grid-cols-2 gap-4 border-t pt-4">
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Status Pembayaran</p>
+                    <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold
+                        @if($order->payment_status === 'lunas') bg-emerald-100 text-emerald-800 @else bg-amber-100 text-amber-800 @endif">
+                        {{ ucfirst(str_replace('_', ' ', $order->payment_status)) }}
+                    </span>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Status Ambil</p>
+                    <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold
+                        @if($order->pickup_status === 'sudah_diambil') bg-emerald-100 text-emerald-800 @else bg-blue-100 text-blue-800 @endif">
+                        {{ ucfirst(str_replace('_', ' ', $order->pickup_status)) }}
+                    </span>
+                </div>
+            </div>
+
+            @if($order->payment && $order->payment->status === 'menunggu_verifikasi')
+                <p class="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-[11px] font-semibold text-amber-900">
+                    Konfirmasi pembayaran Anda sudah diterima dan sedang menunggu verifikasi kasir.
+                </p>
+            @endif
+        </div>
+
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+            <h3 class="mb-3 text-sm font-black text-gray-800">Item Pesanan</h3>
+            <div class="overflow-x-auto">
                 <table class="madang-table min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Menu</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Qty</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Harga</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Subtotal</th>
+                            <th class="px-4 py-2 text-left text-[10px] font-bold uppercase tracking-wider text-gray-500">Menu</th>
+                            <th class="px-4 py-2 text-left text-[10px] font-bold uppercase tracking-wider text-gray-500">Qty</th>
+                            <th class="px-4 py-2 text-left text-[10px] font-bold uppercase tracking-wider text-gray-500">Harga</th>
+                            <th class="px-4 py-2 text-left text-[10px] font-bold uppercase tracking-wider text-gray-500">Subtotal</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody class="divide-y divide-gray-100">
                         @foreach($order->items as $item)
-                        <tr>
-                            <td class="px-6 py-4">{{ $item->menu->name }}</td>
-                            <td class="px-6 py-4">{{ $item->quantity }}</td>
-                            <td class="px-6 py-4">Rp{{ number_format($item->price, 0, ',', '.') }}</td>
-                            <td class="px-6 py-4 font-medium">Rp{{ number_format($item->subtotal, 0, ',', '.') }}</td>
-                        </tr>
+                            <tr>
+                                <td class="px-4 py-3 text-xs">
+                                    <span class="font-bold text-gray-800">{{ $item->menu->name ?? 'Menu dihapus' }}</span>
+                                    @if($item->options)
+                                        <span class="block text-[10px] text-gray-500">{{ $item->options['label'] ?? '' }}</span>
+                                    @endif
+                                </td>
+                                <td class="px-4 py-3 text-xs">{{ $item->quantity }}</td>
+                                <td class="px-4 py-3 text-xs">Rp{{ number_format($item->price, 0, ',', '.') }}</td>
+                                <td class="px-4 py-3 text-xs font-bold">Rp{{ number_format($item->subtotal, 0, ',', '.') }}</td>
+                            </tr>
                         @endforeach
                     </tbody>
                     <tfoot class="bg-gray-50">
                         <tr>
-                            <td colspan="3" class="px-6 py-3 text-right font-semibold">Total</td>
-                            <td class="px-6 py-3 font-bold text-brand-700 font-term">Rp{{ number_format($order->total_price, 0, ',', '.') }}</td>
+                            <td colspan="3" class="px-4 py-3 text-right text-xs font-bold text-gray-700">Total</td>
+                            <td class="px-4 py-3 text-xs font-black text-brand-800">Rp{{ number_format($order->total_price, 0, ',', '.') }}</td>
                         </tr>
                     </tfoot>
                 </table>
-
-                @if($order->notes)
-                <div class="mt-4 p-4 bg-gray-50 rounded-lg">
-                    <p class="text-sm text-gray-500">Catatan: {{ $order->notes }}</p>
-                </div>
-                @endif
             </div>
+
+            @if($order->notes)
+                <div class="mt-4 rounded-xl bg-gray-50 p-3">
+                    <p class="text-[11px] text-gray-600"><span class="font-bold">Catatan:</span> {{ $order->notes }}</p>
+                </div>
+            @endif
         </div>
     </div>
 
-    {{-- Pesanan baru saja dibuat: keranjang di browser harus dikosongkan agar
-         isi yang sudah dipesan tidak terbawa lagi saat pelanggan memesan lagi. --}}
+    {{-- Pesanan baru dibuat lewat form biasa: keranjang browser harus
+         dikosongkan. Alur AJAX di dashboard sudah mengosongkan sendiri. --}}
     @if(session('cart_cleared'))
         @push('scripts')
             <script>
@@ -128,4 +126,4 @@
             </script>
         @endpush
     @endif
-</x-app-layout>
+</x-pelanggan-layout>

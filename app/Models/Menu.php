@@ -20,6 +20,7 @@ class Menu extends Model
         'image',
         'price',
         'status_ketersediaan',
+        'options',
     ];
 
     /**
@@ -54,6 +55,7 @@ class Menu extends Model
     protected $casts = [
         'price' => 'decimal:2',
         'status_ketersediaan' => 'boolean',
+        'options' => 'array',
     ];
 
     public function category(): BelongsTo

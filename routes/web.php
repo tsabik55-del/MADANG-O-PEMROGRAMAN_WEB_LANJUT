@@ -54,14 +54,17 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('role:pelanggan')->prefix('pelanggan')->name('pelanggan.')->group(function () {
-        Route::get('/dashboard', function () {
-            $menus = Menu::where('status_ketersediaan', true)->get()->groupBy('category_id');
-            $categories = \App\Models\Category::all();
-            return view('pelanggan.dashboard', compact('menus', 'categories'));
-        })->name('dashboard');
+        Route::get('/dashboard', [\App\Http\Controllers\Pelanggan\DashboardController::class, 'index'])->name('dashboard');
 
+        Route::patch('/profile', [\App\Http\Controllers\Pelanggan\ProfileController::class, 'update'])->name('profile.update');
+
+        // /orders/data harus didaftarkan sebelum /orders/{order}, kalau tidak
+        // "data" akan dianggap sebagai ID pesanan dan berujung 404.
+        Route::get('/orders/data', [\App\Http\Controllers\Pelanggan\OrderController::class, 'data'])->name('orders.data');
         Route::get('/orders', [\App\Http\Controllers\Pelanggan\OrderController::class, 'index'])->name('orders.index');
         Route::post('/orders', [\App\Http\Controllers\Pelanggan\OrderController::class, 'store'])->name('orders.store');
+        Route::get('/orders/{order}/qris', [\App\Http\Controllers\Pelanggan\OrderController::class, 'qris'])->name('orders.qris');
+        Route::post('/orders/{order}/bayar', [\App\Http\Controllers\Pelanggan\OrderController::class, 'konfirmasiBayar'])->name('orders.bayar');
         Route::get('/orders/{order}', [\App\Http\Controllers\Pelanggan\OrderController::class, 'show'])->name('orders.show');
         Route::delete('/orders/{order}', [\App\Http\Controllers\Pelanggan\OrderController::class, 'destroy'])->name('orders.destroy');
     });

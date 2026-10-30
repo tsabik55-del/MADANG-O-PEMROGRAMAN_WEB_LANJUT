@@ -131,34 +131,34 @@ class CartCheckoutTest extends TestCase
             ->assertSessionHas('cart_cleared', true);
     }
 
-    public function test_halaman_katalog_memakai_class_css_keranjang(): void
+    public function test_halaman_katalog_memakai_data_dari_database(): void
     {
-        // Elemen keranjang hanya bisa digeser oleh .cart-panel / .cart-overlay
-        // di madang-theme.css. Kalau class itu hilang dari markup, panel diam
-        // di luar layar dan tidak pernah terlihat meskipun JavaScript jalan.
-        $menu = Menu::factory()->create(['status_ketersediaan' => true]);
-        $category = $menu->category;
-        $menu->update(['category_id' => $category->id]);
+        // Dashboard pelanggan harus menampilkan menu dari database, bukan
+        // daftar hardcode. Nama menu yang tidak ada di DB tidak boleh muncul,
+        // dan nama yang ada harus ikut terkirim ke komponen Alpine.
+        $menu = Menu::factory()->create([
+            'name' => 'Nasi Sambel Uji Kotak',
+            'status_ketersediaan' => true,
+        ]);
 
         $html = $this->actingAs($this->pelanggan())
             ->get(route('pelanggan.dashboard'))
             ->assertOk()
             ->getContent();
 
-        // Hanya .cart-panel dan .cart-overlay yang punya aturan CSS di
-        // madang-theme.css. #cart-sidebar sendiri diatur lewat utility
-        // Tailwind, jadi tidak perlu class tambahan.
-        foreach (['cart-panel', 'cart-overlay'] as $class) {
-            $this->assertMatchesRegularExpression(
-                '/class="[^"]*\b' . preg_quote($class, '/') . '\b[^"]*"/',
-                $html,
-                "Elemen keranjang harus punya class CSS {$class}."
-            );
-        }
+        $this->assertStringContainsString('Nasi Sambel Uji Kotak', $html);
+        $this->assertStringContainsString('dashboardPelanggan(', $html);
 
-        // translate-x-full milik Tailwind akan menimpa aturan .cart-panel,
-        // sehingga class itu harus dihapus dari markup.
-        $this->assertStringNotContainsString('translate-x-full', $html);
+        // Keranjang sekarang digerakkan Alpine, bukan panel .cart-panel lama.
+        $this->assertStringContainsString('MADANGO_CART_KEY', $html);
+
+        // Data contoh dari desain acuan tidak boleh ikut terbawa.
+        $this->assertStringNotContainsString('Penyetan Ayam Goreng', $html);
+
+        // Tailwind harus lewat Vite, bukan CDN.
+        $this->assertStringNotContainsString('cdn.tailwindcss.com', $html);
+
+        $this->assertNotNull($menu->id);
     }
 
     public function test_keranjang_kosong_ditolak(): void

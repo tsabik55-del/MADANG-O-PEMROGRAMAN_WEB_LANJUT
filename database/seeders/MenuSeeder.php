@@ -8,6 +8,22 @@ use Illuminate\Database\Seeder;
 
 class MenuSeeder extends Seeder
 {
+    /**
+     * Varian nasi yang ditawarkan untuk menu berat.
+     *
+     * `delta` adalah tambahan harga (rupiah) yang dihitung di server.
+     * Browser hanya mengirim `key`, sehingga harga tidak bisa diubah
+     * dari sisi klien.
+     */
+    private const VARIAN_NASI = [
+        'label' => 'Varian Nasi',
+        'choices' => [
+            ['key' => 'putih', 'label' => 'Nasi Putih (Standar)', 'delta' => 0],
+            ['key' => 'jeruk', 'label' => 'Nasi Daun Jeruk', 'delta' => 2000],
+            ['key' => 'kuning', 'label' => 'Nasi Kuning', 'delta' => 4000],
+        ],
+    ];
+
     private static array $menus = [
         'Menu Harian' => [
             ['name' => 'Nasi Sambel Ayam', 'description' => 'Nasi putih dengan sambel ayam khas', 'price' => 15000, 'image' => 'images/menus/nasi-sambel-ayam.jpg'],
@@ -27,15 +43,24 @@ class MenuSeeder extends Seeder
         foreach (self::$menus as $categoryName => $items) {
             $category = Category::where('name', $categoryName)->first();
 
+            if (! $category) {
+                continue;
+            }
+
             foreach ($items as $item) {
-                Menu::create([
-                    'category_id' => $category->id,
-                    'name' => $item['name'],
-                    'description' => $item['description'],
-                    'price' => $item['price'],
-                    'image' => $item['image'] ?? null,
-                    'status_ketersediaan' => true,
-                ]);
+                Menu::updateOrCreate(
+                    [
+                        'category_id' => $category->id,
+                        'name' => $item['name'],
+                    ],
+                    [
+                        'description' => $item['description'],
+                        'price' => $item['price'],
+                        'image' => $item['image'] ?? null,
+                        'status_ketersediaan' => true,
+                        'options' => self::VARIAN_NASI,
+                    ]
+                );
             }
         }
     }

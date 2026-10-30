@@ -16,11 +16,13 @@ class OrderItem extends Model
         'quantity',
         'price',
         'subtotal',
+        'options',
     ];
 
     protected $casts = [
         'price' => 'decimal:2',
         'subtotal' => 'decimal:2',
+        'options' => 'array',
     ];
 
     public function order(): BelongsTo

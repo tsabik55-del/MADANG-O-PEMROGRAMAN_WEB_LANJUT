@@ -18,14 +18,18 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register(): void
     {
+        // Pendaftaran mewajibkan username dan nomor WhatsApp, sama seperti
+        // formulir asli di halaman /register.
         $response = $this->post('/register', [
             'name' => 'Test User',
+            'username' => 'testuser',
             'email' => 'test@example.com',
+            'wa_number' => '081234567890',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        $response->assertRedirect(route('pelanggan.dashboard', absolute: false));
     }
 }

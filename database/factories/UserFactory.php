@@ -23,6 +23,7 @@ class UserFactory extends Factory
             'wa_number' => '08' . fake()->numerify('##########'),
             'password' => static::$password ??= Hash::make('password'),
             'role' => 'pelanggan',
+            'email_verified_at' => now(),
             'remember_token' => Str::random(10),
         ];
     }
