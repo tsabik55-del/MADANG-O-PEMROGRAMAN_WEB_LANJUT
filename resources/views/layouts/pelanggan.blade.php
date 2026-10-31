@@ -32,14 +32,8 @@
         <div>
             {{-- Logo & branding --}}
             <div class="mb-6 flex items-center space-x-3">
-                <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full border-2 border-amber-400 bg-brand-950 shadow-lg">
-                    <svg viewBox="0 0 48 48" class="h-8 w-8" fill="none" aria-hidden="true">
-                        <ellipse cx="24" cy="30" rx="17" ry="7" fill="#FAF5EC" opacity=".95"/>
-                        <path d="M14 29c0-7 4.5-13 10-13s10 6 10 13" fill="#FAF5EC" opacity=".55"/>
-                        <path d="M27 8c3 3 3 7 0 10-3-3-3-7 0-10Z" fill="#E4572E"/>
-                        <path d="M30 9c4 1 6 4 6 8-4-1-6-4-6-8Z" fill="#22C55E"/>
-                    </svg>
-                </span>
+                <img src="{{ asset('image/logo.jpeg') }}" alt="Logo Mbak Tatik"
+                     class="h-12 w-12 shrink-0 rounded-full border-2 border-amber-400 object-cover shadow-lg">
                 <div class="min-w-0">
                     <h1 class="text-base font-black leading-tight tracking-wide text-amber-300">SEGO SAMBEL</h1>
                     <p class="text-xs font-bold text-white">Mbak Tatik</p>

@@ -1,2 +1,5 @@
 *
 !.gitignore
+!images/
+!images/menus/
+!images/menus/*.jpg
