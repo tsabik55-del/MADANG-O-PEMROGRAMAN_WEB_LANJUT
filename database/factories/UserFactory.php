@@ -20,7 +20,7 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'username' => fake()->unique()->userName(),
             'email' => fake()->unique()->safeEmail(),
-            'wa_number' => '08' . fake()->numerify('##########'),
+            'wa_number' => '08'.fake()->numerify('##########'),
             'password' => static::$password ??= Hash::make('password'),
             'role' => 'pelanggan',
             'email_verified_at' => now(),

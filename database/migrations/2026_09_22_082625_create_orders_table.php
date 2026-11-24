@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->datetime('pickup_datetime');
             $table->enum('payment_method', ['tunai', 'transfer'])->default('tunai');
-            $table->enum('payment_status', ['belum_lunas', 'lunas'])->default('belum_lunas');
+            $table->enum('payment_status', ['belum_lunas', 'menunggu_verifikasi', 'lunas'])->default('belum_lunas');
             $table->enum('pickup_status', ['belum_diambil', 'sudah_diambil'])->default('belum_diambil');
             $table->enum('source', ['online', 'manual'])->default('online');
             $table->decimal('total_price', 12, 2);

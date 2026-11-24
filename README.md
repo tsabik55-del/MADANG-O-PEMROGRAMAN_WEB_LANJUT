@@ -1,58 +1,129 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# MADANG-O — Sistem Informasi Sego Sambel Mbak Tatik
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi pemesanan dan pengelolaan usaha kuliner berbasis web. Pelanggan dapat
+melihat katalog, memesan, membayar (tunai/transfer/QRIS), dan memantau pesanan.
+Owner dan karyawan mengelola menu, pesanan, pengguna, serta laporan penjualan.
 
-## About Laravel
+Dibangun dengan **Laravel 13**, **PHP 8.3+**, **MySQL/MariaDB**, **Blade + Tailwind CSS + Alpine.js**, dan **Laravel Breeze** untuk autentikasi.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Fitur
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Pelanggan
+- Registrasi & login (email + kata sandi, nomor WhatsApp unik).
+- Katalog menu dengan foto, harga, filter kategori, dan pencarian.
+- Varian nasi (putih/daun jeruk/kuning) dengan tambahan harga dihitung di server.
+- Keranjang, checkout, dan nomor pesanan unik otomatis.
+- Pembayaran tunai, transfer, dan QRIS (QR dibuat di server).
+- Konfirmasi pembayaran → menunggu verifikasi kasir.
+- Riwayat pesanan dan pembatalan selama masih `menunggu_pembayaran` (soft cancel).
+- Kelola biodata (nama, WhatsApp, alamat).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Karyawan (Kasir)
+- Dashboard ringkasan pesanan.
+- Daftar & detail pesanan dengan pencarian/filter (nomor, nama, telepon, status, tanggal).
+- Catat pesanan manual (telepon/WhatsApp).
+- Ubah status pembayaran, status ambil, dan alur pesanan dengan aturan transisi.
+- Verifikasi pembayaran QRIS/transfer.
 
-## Learning Laravel
+### Owner (Admin)
+- Dashboard statistik (pendapatan dihitung dari pembayaran lunas, pesanan batal dikecualikan).
+- CRUD menu termasuk unggah foto (JPG/PNG/WEBP, maks. 2 MB).
+- Kelola semua pesanan + catat pesanan manual.
+- Management pengguna: cari/filter peran, tambah, ubah, reset kata sandi, hapus.
+- Proteksi akun sendiri (tidak bisa hapus/downgrade peran sendiri).
+- Rekap & laporan harian/bulanan, menu terlaris, dan cetak laporan.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Peran & Hak Akses
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Peran | Area | Catatan |
+|---|---|---|
+| `owner` | `/owner/*` | Akses penuh, boleh mengoreksi status pesanan |
+| `karyawan` | `/karyawan/*` | Pesanan hanya boleh maju satu tahap |
+| `pelanggan` | `/pelanggan/*` | Hanya data miliknya sendiri |
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Middleware `role` (`App\Http\Middleware\EnsureRole`) menolak akses lintas peran
+dengan HTTP 403.
 
-## Agentic Development
+## Kebutuhan Sistem
+- PHP 8.3+ dengan ekstensi `pdo_mysql`, `gd`, `fileinfo`
+- Composer 2
+- Node.js 20+ dan npm
+- MySQL 8 / MariaDB 10.4+
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Instalasi
 
 ```bash
-composer require laravel/boost --dev
+# 1. Dependensi
+composer install
+npm install
 
-php artisan boost:install
+# 2. Konfigurasi
+cp .env.example .env
+php artisan key:generate
+
+# 3. Sesuaikan koneksi database di .env
+#    DB_DATABASE=madango_db
+#    DB_USERNAME=...
+#    DB_PASSWORD=...
+
+# 4. Migrasi + data contoh
+php artisan migrate:fresh --seed
+
+# 5. Tautkan folder foto menu
+php artisan storage:link
+
+# 6. Aset frontend
+npm run build      # produksi
+# atau: npm run dev
+
+# 7. Jalankan
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Buka `http://localhost:8000`.
 
-## Contributing
+## Akun Demo (hasil seeder)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Peran | Email | Kata sandi |
+|---|---|---|
+| Owner | `tatik@segosambel.com` | `password` |
+| Karyawan | `sari@segosambel.com` | `password` |
+| Pelanggan | 20 akun acak dari factory | `password` |
 
-## Code of Conduct
+## Pengujian
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php artisan test          # 75 test, 248 assertion
+./vendor/bin/pint --test  # cek gaya kode
+```
 
-## Security Vulnerabilities
+Test menggunakan SQLite in-memory (lihat `phpunit.xml`) sehingga tidak
+menyentuh database pengembangan.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Struktur Singkat
 
-## License
+```
+app/
+├── Http/Controllers/
+│   ├── Auth/            # Breeze
+│   ├── Karyawan/        # dashboard & pesanan kasir
+│   ├── Owner/           # dashboard, menu, pesanan, pengguna, laporan
+│   └── Pelanggan/       # katalog, pesanan, profil
+├── Models/              # Order, OrderItem, Menu, Payment, Category, User
+├── Policies/            # OrderPolicy (kepemilikan & pembatalan)
+└── Services/            # OrderService, OrderItemBuilder
+database/
+├── migrations/
+├── seeders/
+└── factories/
+resources/views/         # owner/, karyawan/, pelanggan/, orders/, auth/
+routes/web.php
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Aturan Bisnis Utama
+1. Pelanggan hanya boleh membatalkan pesanan selama status masih `menunggu_pembayaran`.
+2. Satu pesanan dapat memuat beberapa menu (1–3 item atau lebih).
+3. Metode pembayaran: tunai, transfer, QRIS.
+4. Nominal pembayaran selalu dihitung ulang dari harga di database.
+5. Status pesanan pada `orders` dan status pembayaran pada `payments` selalu disinkronkan.
+6. Menu yang sudah dipakai di pesanan tidak dapat dihapus (riwayat tetap utuh).

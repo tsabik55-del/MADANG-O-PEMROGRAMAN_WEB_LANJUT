@@ -21,13 +21,13 @@ class OrderFactory extends Factory
             fake()->randomElement([0, 15, 30, 45])
         );
 
-        $orderNumber = 'MAD-' . $pickupDate->format('Ymd') . '-' . str_pad(self::$counter++, 4, '0', STR_PAD_LEFT);
+        $orderNumber = 'MAD-'.$pickupDate->format('Ymd').'-'.str_pad(self::$counter++, 4, '0', STR_PAD_LEFT);
 
         return [
             'order_number' => $orderNumber,
             'user_id' => fake()->optional(0.7)->passthrough(User::factory()->pelanggan()),
             'customer_name' => fake()->name(),
-            'phone' => '08' . fake()->numerify('##########'),
+            'phone' => '08'.fake()->numerify('##########'),
             'pickup_datetime' => $pickupDate,
             'payment_method' => fake()->randomElement(['tunai', 'transfer']),
             'payment_status' => fake()->randomElement(['belum_lunas', 'lunas']),

@@ -49,7 +49,9 @@
                 <div>
                     <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Status Pembayaran</p>
                     <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold
-                        @if($order->payment_status === 'lunas') bg-emerald-100 text-emerald-800 @else bg-amber-100 text-amber-800 @endif">
+                        @if($order->payment_status === 'lunas') bg-emerald-100 text-emerald-800
+                        @elseif($order->payment_status === 'menunggu_verifikasi') bg-blue-100 text-blue-800
+                        @else bg-amber-100 text-amber-800 @endif">
                         {{ ucfirst(str_replace('_', ' ', $order->payment_status)) }}
                     </span>
                 </div>
@@ -85,7 +87,7 @@
                         @foreach($order->items as $item)
                             <tr>
                                 <td class="px-4 py-3 text-xs">
-                                    <span class="font-bold text-gray-800">{{ $item->menu->name ?? 'Menu dihapus' }}</span>
+                                    <span class="font-bold text-gray-800">{{ $item->display_name }}</span>
                                     @if($item->options)
                                         <span class="block text-[10px] text-gray-500">{{ $item->options['label'] ?? '' }}</span>
                                     @endif

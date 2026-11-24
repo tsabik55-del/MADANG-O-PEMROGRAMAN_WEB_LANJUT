@@ -145,7 +145,12 @@ class PelangganFiturTest extends TestCase
             ->assertJsonPath('payment_status', 'menunggu_verifikasi');
 
         $this->assertSame('menunggu_verifikasi', Payment::firstOrFail()->status);
-        $this->assertSame('belum_lunas', $order->fresh()->payment_status, 'Pelanggan tidak boleh melunasi sendiri.');
+        $this->assertSame(
+            'menunggu_verifikasi',
+            $order->fresh()->payment_status,
+            'Pelanggan hanya boleh menandai menunggu verifikasi, bukan lunas.'
+        );
+        $this->assertNotSame('lunas', $order->fresh()->payment_status, 'Pelanggan tidak boleh melunasi sendiri.');
     }
 
     public function test_checkout_json_mengembalikan_pesanan(): void

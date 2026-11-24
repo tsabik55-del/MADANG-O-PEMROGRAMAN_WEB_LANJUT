@@ -1,0 +1,452 @@
+[
+  {
+    "id": "TC-ACC-01",
+    "module": "Autentikasi",
+    "role": "Publik",
+    "title": "Tamu diarahkan ke halaman login saat membuka area owner",
+    "requirement": "FR-01",
+    "expected": "Redirect ke /login dan formulir login tampil.",
+    "actual": "Dialihkan ke http://127.0.0.1:8124/login dan formulir login tampil.",
+    "status": "PASS",
+    "evidence": [
+      "TC-ACC-01_PUBLIC_LOGIN_STEP01_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:06.066Z"
+  },
+  {
+    "id": "TC-ACC-02",
+    "module": "Autentikasi",
+    "role": "Owner",
+    "title": "Login owner berhasil dan masuk ke dashboard owner",
+    "requirement": "FR-01",
+    "expected": "Dashboard owner tampil dengan kartu statistik.",
+    "actual": "Login berhasil, berada di http://127.0.0.1:8124/owner/dashboard.",
+    "status": "PASS",
+    "evidence": [
+      "TC-ACC-02_OWNER_LOGIN_STEP02_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:08.145Z"
+  },
+  {
+    "id": "TC-ACC-03",
+    "module": "Autentikasi",
+    "role": "Karyawan",
+    "title": "Login karyawan berhasil dan masuk ke dashboard karyawan",
+    "requirement": "FR-01",
+    "expected": "Dashboard karyawan tampil.",
+    "actual": "Login berhasil, berada di http://127.0.0.1:8124/karyawan/dashboard.",
+    "status": "PASS",
+    "evidence": [
+      "TC-ACC-03_KARYAWAN_LOGIN_STEP02_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:09.489Z"
+  },
+  {
+    "id": "TC-ACC-04",
+    "module": "Autentikasi",
+    "role": "Pelanggan",
+    "title": "Login pelanggan berhasil dan katalog menu tampil",
+    "requirement": "FR-01, FR-03",
+    "expected": "Halaman menu & pesan tampil dengan kartu menu.",
+    "actual": "Katalog tampil dengan 7 tombol tambah menu.",
+    "status": "PASS",
+    "evidence": [
+      "TC-ACC-04_PELANGGAN_LOGIN_STEP02_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:10.841Z"
+  },
+  {
+    "id": "TC-ACC-05",
+    "module": "Kontrol Akses",
+    "role": "Pelanggan",
+    "title": "Pelanggan ditolak (403) saat membuka halaman menu owner",
+    "requirement": "FR-01 (role middleware)",
+    "expected": "HTTP 403 Forbidden.",
+    "actual": "Server mengembalikan HTTP 403.",
+    "status": "PASS",
+    "evidence": [
+      "TC-ACC-05_PELANGGAN_403_STEP01_PASS.png"
+    ],
+    "notes": "Console error: Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "executed_at": "2026-11-24T07:49:12.457Z"
+  },
+  {
+    "id": "TC-ACC-06",
+    "module": "Kontrol Akses",
+    "role": "Karyawan",
+    "title": "Karyawan ditolak (403) saat membuka halaman laporan owner",
+    "requirement": "FR-01, FR-15",
+    "expected": "HTTP 403 Forbidden.",
+    "actual": "Server mengembalikan HTTP 403.",
+    "status": "PASS",
+    "evidence": [
+      "TC-ACC-06_KARYAWAN_403_STEP01_PASS.png"
+    ],
+    "notes": "Console error: Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "executed_at": "2026-11-24T07:49:13.862Z"
+  },
+  {
+    "id": "TC-ACC-07",
+    "module": "Autentikasi",
+    "role": "Publik",
+    "title": "Login dengan kata sandi salah ditolak",
+    "requirement": "FR-01",
+    "expected": "Tetap di halaman login dan muncul pesan kesalahan.",
+    "actual": "Login ditolak, tetap di /login dengan pesan kesalahan.",
+    "status": "PASS",
+    "evidence": [
+      "TC-ACC-07_PUBLIC_LOGIN_GAGAL_STEP02_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:15.220Z"
+  },
+  {
+    "id": "TC-OWN-01",
+    "module": "Dashboard Owner",
+    "role": "Owner",
+    "title": "Dashboard owner menampilkan statistik dan pendapatan",
+    "requirement": "FR-15",
+    "expected": "Kartu TOTAL_PESANAN, TOTAL_PENDAPATAN, dan info hari ini tampil.",
+    "actual": "Kartu statistik dan nilai rupiah tampil.",
+    "status": "PASS",
+    "evidence": [
+      "TC-OWN-01_OWNER_DASHBOARD_STEP01_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:16.514Z"
+  },
+  {
+    "id": "TC-OWN-02",
+    "module": "Pengelolaan Menu",
+    "role": "Owner",
+    "title": "Daftar menu menampilkan foto dan data menu",
+    "requirement": "FR-14",
+    "expected": "Tabel menu tampil dengan foto, kategori, harga.",
+    "actual": "Tabel menu tampil dengan 7 foto.",
+    "status": "PASS",
+    "evidence": [
+      "TC-OWN-02_OWNER_MENU_LIST_STEP01_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:18.328Z"
+  },
+  {
+    "id": "TC-OWN-03",
+    "module": "Pengelolaan Menu",
+    "role": "Owner",
+    "title": "Form tambah menu menyediakan unggah foto",
+    "requirement": "FR-14",
+    "expected": "Input file image_file dengan accept JPG/PNG/WEBP tampil.",
+    "actual": "Input unggah foto tersedia dengan accept=image/jpeg,image/png,image/webp.",
+    "status": "PASS",
+    "evidence": [
+      "TC-OWN-03_OWNER_MENU_UPLOAD_FORM_STEP01_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:20.548Z"
+  },
+  {
+    "id": "TC-OWN-04",
+    "module": "Pengelolaan Menu",
+    "role": "Owner",
+    "title": "Tambah menu baru dengan foto berhasil disimpan",
+    "requirement": "FR-14",
+    "expected": "Menu baru muncul di daftar dan foto tersimpan.",
+    "actual": "Menu \"Menu Uji QA 61821\" tersimpan dan tampil dengan foto.",
+    "status": "PASS",
+    "evidence": [
+      "TC-OWN-04_OWNER_MENU_CREATE_STEP03_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:21.821Z"
+  },
+  {
+    "id": "TC-OWN-05",
+    "module": "Pengelolaan Menu",
+    "role": "Owner",
+    "title": "Unggah berkas non-gambar ditolak validasi",
+    "requirement": "FR-14",
+    "expected": "Pesan validasi tampil dan menu tidak tersimpan.",
+    "actual": "Berkas PDF ditolak dengan pesan validasi, tetap di form tambah menu.",
+    "status": "PASS",
+    "evidence": [
+      "TC-OWN-05_OWNER_MENU_UPLOAD_INVALID_STEP03_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:23.577Z"
+  },
+  {
+    "id": "TC-OWN-06",
+    "module": "Pengelolaan Menu",
+    "role": "Owner",
+    "title": "Hapus menu uji berhasil",
+    "requirement": "FR-14",
+    "expected": "Menu terhapus dari daftar dengan konfirmasi.",
+    "actual": "Menu uji terhapus dan tidak tampil lagi.",
+    "status": "PASS",
+    "evidence": [
+      "TC-OWN-06_OWNER_MENU_DELETE_STEP02_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:25.194Z"
+  },
+  {
+    "id": "TC-OWN-07",
+    "module": "Pencatatan Pesanan",
+    "role": "Owner",
+    "title": "Filter pesanan berdasarkan status alur",
+    "requirement": "FR-12",
+    "expected": "Hanya pesanan berstatus Diproses yang tampil.",
+    "actual": "6 baris tampil, semuanya berstatus Diproses.",
+    "status": "PASS",
+    "evidence": [
+      "TC-OWN-07_OWNER_ORDER_FILTER_STEP01_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:27.066Z"
+  },
+  {
+    "id": "TC-OWN-08",
+    "module": "Pencatatan Pesanan",
+    "role": "Owner",
+    "title": "Owner mencatat pesanan manual (telepon/WhatsApp)",
+    "requirement": "FR-09",
+    "expected": "Pesanan tersimpan dengan sumber Manual dan total dihitung server.",
+    "actual": "Pesanan MAD-20261124-0003 tercatat dengan sumber Manual.",
+    "status": "PASS",
+    "evidence": [
+      "TC-OWN-08_OWNER_MANUAL_ORDER_STEP04_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:28.486Z"
+  },
+  {
+    "id": "TC-OWN-09",
+    "module": "Pengelolaan Pesanan",
+    "role": "Owner",
+    "title": "Owner mengubah status pembayaran menjadi Menunggu Verifikasi",
+    "requirement": "FR-10, FR-13",
+    "expected": "Perubahan tersimpan dan status baru tampil.",
+    "actual": "Status pembayaran berubah menjadi Menunggu Verifikasi.",
+    "status": "PASS",
+    "evidence": [
+      "TC-OWN-09_OWNER_ORDER_PAYMENT_EDIT_STEP03_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:30.130Z"
+  },
+  {
+    "id": "TC-OWN-10",
+    "module": "Laporan",
+    "role": "Owner",
+    "title": "Halaman rekap & laporan penjualan tampil",
+    "requirement": "FR-15",
+    "expected": "Rekap harian, menu terlaris, rekap bulanan, dan tombol cetak tampil.",
+    "actual": "Semua bagian laporan dan tombol cetak tampil.",
+    "status": "PASS",
+    "evidence": [
+      "TC-OWN-10_OWNER_REPORT_STEP01_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:31.895Z"
+  },
+  {
+    "id": "TC-OWN-11",
+    "module": "Manajemen Pengguna",
+    "role": "Owner",
+    "title": "Pencarian pengguna berdasarkan nama",
+    "requirement": "FR-02",
+    "expected": "Hasil pencarian hanya menampilkan pengguna yang cocok.",
+    "actual": "Pencarian \"Sari\" menampilkan hasil yang sesuai.",
+    "status": "PASS",
+    "evidence": [
+      "TC-OWN-11_OWNER_USER_SEARCH_STEP01_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:33.205Z"
+  },
+  {
+    "id": "TC-KAR-01",
+    "module": "Dashboard Karyawan",
+    "role": "Karyawan",
+    "title": "Dashboard karyawan menampilkan ringkasan pesanan",
+    "requirement": "FR-08",
+    "expected": "Kartu total pesanan, belum lunas, dan tabel pesanan terbaru tampil.",
+    "actual": "Kartu ringkasan dan tabel pesanan terbaru tampil.",
+    "status": "PASS",
+    "evidence": [
+      "TC-KAR-01_KARYAWAN_DASHBOARD_STEP01_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:37.340Z"
+  },
+  {
+    "id": "TC-KAR-02",
+    "module": "Pencarian Pesanan",
+    "role": "Karyawan",
+    "title": "Filter pesanan berdasarkan status pembayaran Menunggu Verifikasi",
+    "requirement": "FR-12",
+    "expected": "Pesanan hasil ubah owner muncul pada filter tersebut.",
+    "actual": "1 pesanan tampil pada filter Menunggu Verifikasi.",
+    "status": "PASS",
+    "evidence": [
+      "TC-KAR-02_KARYAWAN_ORDER_FILTER_STEP01_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:40.239Z"
+  },
+  {
+    "id": "TC-KAR-03",
+    "module": "Alur Status",
+    "role": "Karyawan",
+    "title": "Pilihan status karyawan dibatasi sesuai transisi yang sah",
+    "requirement": "FR-13 (state machine)",
+    "expected": "Untuk status Menunggu Pembayaran hanya tersedia Menunggu Pembayaran, Diproses, Dibatalkan.",
+    "actual": "Opsi status: Menunggu Pembayaran | Diproses | Dibatalkan.",
+    "status": "PASS",
+    "evidence": [
+      "TC-KAR-03_KARYAWAN_STATUS_OPTIONS_STEP01_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:42.744Z"
+  },
+  {
+    "id": "TC-KAR-04",
+    "module": "Alur Status",
+    "role": "Karyawan",
+    "title": "Karyawan memajukan status pesanan satu tahap",
+    "requirement": "FR-13",
+    "expected": "Status berubah dari Menunggu Pembayaran ke Diproses.",
+    "actual": "Status pesanan menjadi Diproses.",
+    "status": "PASS",
+    "evidence": [
+      "TC-KAR-04_KARYAWAN_STATUS_ADVANCE_STEP02_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:45.430Z"
+  },
+  {
+    "id": "TC-KAR-05",
+    "module": "Verifikasi Pembayaran",
+    "role": "Karyawan",
+    "title": "Karyawan memverifikasi pembayaran menjadi Lunas",
+    "requirement": "FR-10",
+    "expected": "Status pembayaran berubah menjadi Lunas.",
+    "actual": "Pembayaran pesanan diverifikasi menjadi Lunas.",
+    "status": "PASS",
+    "evidence": [
+      "TC-KAR-05_KARYAWAN_PAYMENT_VERIFY_STEP02_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:48.822Z"
+  },
+  {
+    "id": "TC-KAR-06",
+    "module": "Pencatatan Pesanan",
+    "role": "Karyawan",
+    "title": "Karyawan mencatat pesanan manual",
+    "requirement": "FR-09",
+    "expected": "Pesanan manual tersimpan dan diarahkan ke detail.",
+    "actual": "Pesanan manual karyawan tersimpan dengan sumber Manual.",
+    "status": "PASS",
+    "evidence": [
+      "TC-KAR-06_KARYAWAN_MANUAL_ORDER_STEP04_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:53.814Z"
+  },
+  {
+    "id": "TC-PEL-01",
+    "module": "Pemesanan",
+    "role": "Pelanggan",
+    "title": "Pelanggan membuat pesanan baru melalui katalog",
+    "requirement": "FR-05, FR-06, FR-07",
+    "expected": "Pesanan tersimpan, nomor unik terbit, dan konfirmasi tampil.",
+    "actual": "Pesanan MAD-20261124-0005 berhasil dibuat dari katalog.",
+    "status": "PASS",
+    "evidence": [
+      "TC-PEL-01_PELANGGAN_CHECKOUT_STEP05_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:49:57.899Z"
+  },
+  {
+    "id": "TC-PEL-02",
+    "module": "Riwayat Pesanan",
+    "role": "Pelanggan",
+    "title": "Pelanggan melihat daftar pesanan miliknya",
+    "requirement": "FR-05",
+    "expected": "Daftar pesanan tampil beserta status dan tombol batal.",
+    "actual": "Daftar pesanan pelanggan tampil lengkap.",
+    "status": "PASS",
+    "evidence": [
+      "TC-PEL-02_PELANGGAN_ORDER_LIST_STEP01_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:50:01.883Z"
+  },
+  {
+    "id": "TC-PEL-03",
+    "module": "Riwayat Pesanan",
+    "role": "Pelanggan",
+    "title": "Pelanggan membuka detail pesanan",
+    "requirement": "FR-05",
+    "expected": "Detail pesanan menampilkan item, total, dan status.",
+    "actual": "Detail pesanan lengkap tampil.",
+    "status": "PASS",
+    "evidence": [
+      "TC-PEL-03_PELANGGAN_ORDER_DETAIL_STEP02_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:50:05.083Z"
+  },
+  {
+    "id": "TC-PEL-04",
+    "module": "Pembatalan Pesanan",
+    "role": "Pelanggan",
+    "title": "Pelanggan membatalkan pesanan yang belum diproses (soft cancel)",
+    "requirement": "FR-13, catatan mitra #1",
+    "expected": "Status menjadi Dibatalkan, pesanan tetap ada di riwayat.",
+    "actual": "Status menjadi Dibatalkan dan jumlah baris tetap 1.",
+    "status": "PASS",
+    "evidence": [
+      "TC-PEL-04_PELANGGAN_CANCEL_STEP02_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:50:07.276Z"
+  },
+  {
+    "id": "TC-UI-01",
+    "module": "UI Responsif",
+    "role": "Owner",
+    "title": "Dashboard owner pada viewport mobile 390x844",
+    "requirement": "-",
+    "expected": "Layout menyesuaikan lebar layar tanpa overflow horizontal.",
+    "actual": "Tidak ada overflow horizontal pada 390x844.",
+    "status": "PASS",
+    "evidence": [
+      "TC-UI-01_OWNER_MOBILE_STEP01_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:50:12.681Z"
+  },
+  {
+    "id": "TC-UI-02",
+    "module": "UI Responsif",
+    "role": "Pelanggan",
+    "title": "Katalog pelanggan pada viewport mobile 390x844",
+    "requirement": "-",
+    "expected": "Kartu menu tersusun rapi tanpa overflow.",
+    "actual": "Katalog mobile tampil tanpa overflow horizontal.",
+    "status": "PASS",
+    "evidence": [
+      "TC-UI-02_PELANGGAN_MOBILE_STEP01_PASS.png"
+    ],
+    "notes": "",
+    "executed_at": "2026-11-24T07:50:15.155Z"
+  }
+]

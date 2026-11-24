@@ -8,6 +8,13 @@
 
     <div class="py-12">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            @if(session('success'))
+                <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">{{ session('success') }}</div>
+            @endif
+            @if($errors->any())
+                <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">{{ $errors->first() }}</div>
+            @endif
+
             <div class="bg-white shadow rounded-lg p-6 mb-6">
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
@@ -42,9 +49,14 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Status Pembayaran</label>
+                                @php
+                                    $allowedPayment = array_unique(array_merge([$order->payment_status], $order->allowedNextPaymentStatuses()));
+                                    $paymentLabels = ['belum_lunas' => 'Belum Lunas', 'menunggu_verifikasi' => 'Menunggu Verifikasi', 'lunas' => 'Lunas'];
+                                @endphp
                                 <select name="payment_status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-                                    <option value="belum_lunas" {{ $order->payment_status === 'belum_lunas' ? 'selected' : '' }}>Belum Lunas</option>
-                                    <option value="lunas" {{ $order->payment_status === 'lunas' ? 'selected' : '' }}>Lunas</option>
+                                    @foreach($allowedPayment as $value)
+                                        <option value="{{ $value }}" {{ $order->payment_status === $value ? 'selected' : '' }}>{{ $paymentLabels[$value] ?? $value }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div>
@@ -56,11 +68,16 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Status Alur Pesanan</label>
+                                @php
+                                    $statusLabels = ['menunggu_pembayaran' => 'Menunggu Pembayaran', 'diproses' => 'Diproses', 'siap' => 'Siap', 'dikirim' => 'Dikirim', 'selesai' => 'Selesai', 'dibatalkan' => 'Dibatalkan'];
+                                    $allowedStatus = array_unique(array_merge([$order->status], $order->allowedNextStatuses()));
+                                @endphp
                                 <select name="status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-                                    @foreach(['menunggu_pembayaran' => 'Menunggu Pembayaran', 'diproses' => 'Diproses', 'siap' => 'Siap', 'dikirim' => 'Dikirim', 'selesai' => 'Selesai', 'dibatalkan' => 'Dibatalkan'] as $value => $label)
-                                        <option value="{{ $value }}" {{ $order->status === $value ? 'selected' : '' }}>{{ $label }}</option>
+                                    @foreach($allowedStatus as $value)
+                                        <option value="{{ $value }}" {{ $order->status === $value ? 'selected' : '' }}>{{ $statusLabels[$value] ?? $value }}</option>
                                     @endforeach
                                 </select>
+                                <p class="mt-1 text-xs text-gray-500">Status hanya bisa maju satu tahap. Hubungi owner untuk koreksi.</p>
                             </div>
                         </div>
                         <button type="submit" class="px-4 py-2 bg-brand-700 text-white rounded-lg hover:bg-brand-800">Simpan Status</button>
@@ -82,7 +99,12 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach($order->items as $item)
                         <tr>
-                            <td class="px-6 py-4">{{ $item->menu->name }}</td>
+                            <td class="px-6 py-4">
+                                {{ $item->display_name }}
+                                @if($item->options)
+                                    <span class="block text-xs text-gray-500">{{ $item->options['label'] ?? '' }}</span>
+                                @endif
+                            </td>
                             <td class="px-6 py-4">{{ $item->quantity }}</td>
                             <td class="px-6 py-4">Rp{{ number_format($item->price, 0, ',', '.') }}</td>
                             <td class="px-6 py-4 font-medium">Rp{{ number_format($item->subtotal, 0, ',', '.') }}</td>

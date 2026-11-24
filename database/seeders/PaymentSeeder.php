@@ -19,6 +19,7 @@ class PaymentSeeder extends Seeder
             // yang belum lunas berarti masih menunggu atau pernah gagal.
             $status = match ($order->payment_status) {
                 'lunas' => 'paid',
+                'menunggu_verifikasi' => 'menunggu_verifikasi',
                 default => fake()->randomElement(['pending', 'pending', 'pending', 'failed']),
             };
 
@@ -28,10 +29,10 @@ class PaymentSeeder extends Seeder
                 'amount' => $order->total_price,
                 'status' => $status,
                 'transaction_id' => $method === 'qris' || $method === 'transfer'
-                    ? 'TRX-' . $order->order_number
+                    ? 'TRX-'.$order->order_number
                     : null,
                 'qr_code' => $method === 'qris'
-                    ? 'qrcodes/' . $order->order_number . '.png'
+                    ? 'qrcodes/'.$order->order_number.'.png'
                     : null,
                 'paid_at' => $status === 'paid' ? $order->created_at : null,
             ]);

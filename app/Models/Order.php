@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -11,6 +11,36 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Order extends Model
 {
     use HasFactory;
+
+    public const STATUSES = [
+        'menunggu_pembayaran',
+        'diproses',
+        'siap',
+        'dikirim',
+        'selesai',
+        'dibatalkan',
+    ];
+
+    /**
+     * Transisi status yang sah untuk karyawan (hanya boleh maju).
+     *
+     * Owner tidak dibatasi daftar ini karena berperan sebagai admin yang
+     * boleh mengoreksi status yang salah input.
+     */
+    public const STATUS_TRANSITIONS = [
+        'menunggu_pembayaran' => ['diproses', 'dibatalkan'],
+        'diproses' => ['siap', 'dibatalkan'],
+        'siap' => ['dikirim', 'selesai', 'dibatalkan'],
+        'dikirim' => ['selesai', 'dibatalkan'],
+        'selesai' => [],
+        'dibatalkan' => [],
+    ];
+
+    public const PAYMENT_STATUS_TRANSITIONS = [
+        'belum_lunas' => ['menunggu_verifikasi', 'lunas'],
+        'menunggu_verifikasi' => ['lunas'],
+        'lunas' => [],
+    ];
 
     protected $fillable = [
         'order_number',
@@ -54,5 +84,36 @@ class Order extends Model
     public function payment(): HasOne
     {
         return $this->hasOne(Payment::class);
+    }
+
+    public function scopeNotCancelled($query)
+    {
+        return $query->where('status', '!=', 'dibatalkan');
+    }
+
+    public function scopePaid($query)
+    {
+        return $query->where('payment_status', 'lunas');
+    }
+
+    /**
+     * Status alur yang boleh dipilih berikutnya.
+     */
+    public function allowedNextStatuses(): array
+    {
+        return self::STATUS_TRANSITIONS[$this->status] ?? [];
+    }
+
+    /**
+     * Status pembayaran yang boleh dipilih berikutnya.
+     */
+    public function allowedNextPaymentStatuses(): array
+    {
+        return self::PAYMENT_STATUS_TRANSITIONS[$this->payment_status] ?? [];
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this->status === 'dibatalkan';
     }
 }

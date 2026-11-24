@@ -20,7 +20,7 @@ Tsabiq Riyu Kautsar (2495124019, Backend / QA)
 | `main` | Laravel awal | Arsip |
 | `feature/praktikum04` | Database, model, seeder + lembar kerja LKP04 + ERD + screenshot | ✅ Selesai |
 | `feature/praktikum05` | Login & hak akses peran (Breeze) | ✅ Selesai |
-| `feature/sesi05-management-pengguna` | Integrasi perubahan DB teman + Management Pengguna + pembayaran QRIS | 🔄 Sesi 5 (berjalan) |
+| `feature/sesi05-management-pengguna` | Integrasi DB + Management Pengguna + pembayaran QRIS + perbaikan QA (filter, pesanan manual, laporan, upload foto) | ✅ Selesai |
 
 **Kredensial demo:** owner `tatik@segosambel.com` / karyawan `sari@segosambel.com` / password keduanya `password`.
 
@@ -37,16 +37,16 @@ Legenda status: ✅ Selesai · 🔄 Sesi 5 (sedang dikerjakan) · ⬜ Belum · P
 | A1 | Login (email + password) + redirect sesuai peran | FR-01 | ✅ | Tsabiq |
 | A2 | Register pelanggan (username, email, WA unik) | FR-02 | ✅ | Tsabiq |
 | A3 | Logout + proteksi halaman per peran (`EnsureRole` middleware) | FR-01 | ✅ | Tsabiq |
-| A4 | **Management Pengguna** — daftar, cari/filter peran, tambah (pilih peran), ubah data + peran, hapus, reset password | Class Diagram `Owner.kelolaPengguna()` | 🔄 **Sesi 5** | Tsabiq (backend) + Regita (tampilan tabel & form) |
-| A5 | Proteksi hapus akun sendiri & turunkan peran sendiri | Keamanan | 🔄 **Sesi 5** | Tsabiq |
+| A4 | **Management Pengguna** — daftar, cari/filter peran, tambah (pilih peran), ubah data + peran, hapus, reset password | Class Diagram `Owner.kelolaPengguna()` | ✅ | Tsabiq (backend) + Regita (tampilan tabel & form) |
+| A5 | Proteksi hapus akun sendiri & turunkan peran sendiri | Keamanan | ✅ | Tsabiq |
 
 ### B. Katalog Menu (FR-03, FR-04 · UC-01)
 
 | No | Fitur | FR / UC | Status | PIC |
 |----|-------|---------|--------|-----|
 | B1 | Katalog menu + harga (7 menu, 2 kategori) | FR-03 · UC-01 | ✅ | Tsabiq + Regita |
-| B2 | Ikon kategori (`categories.icon`) + foto menu (`menus.image`) | Struktur DB (teman) | 🔄 **Sesi 5** | Dwika (struktur) · Tsabiq (seeder) · Regita (tampil) |
-| B3 | **Pencarian / filter menu** per kategori harian vs katering | FR-04 (Should) | ⬜ | Regita (UI filter) + Tsabiq (query) |
+| B2 | Ikon kategori (`categories.icon`) + foto menu (`menus.image`, unggah file) | Struktur DB (teman) | ✅ | Dwika (struktur) · Tsabiq (seeder + upload) · Regita (tampil) |
+| B3 | **Pencarian / filter menu** per kategori harian vs katering | FR-04 (Should) | ✅ | Regita (UI filter) + Tsabiq (query) |
 
 ### C. Pemesanan (FR-05…~FR-10 · UC-03, UC-04, UC-07)
 
@@ -54,27 +54,27 @@ Legenda status: ✅ Selesai · 🔄 Sesi 5 (sedang dikerjakan) · ⬜ Belum · P
 |----|-------|---------|--------|-----|
 | C1 | Keranjang (localStorage) + checkout online | FR-05 · UC-03 | ✅ | Tsabiq + Regita |
 | C2 | Total otomatis (`quantity × price`) + nomor order `MAD-…` | FR-05 | ✅ | Tsabiq |
-| C3 | **Status alur pesanan** 6 tahap (`orders.status`) + ubah status (owner & karyawan) | Struktur DB (teman) + `catatan.txt` #1 | 🔄 **Sesi 5** | Dwika (struktur) · Tsabiq (logika + tampilan) |
-| C4 | Catat pesanan **manual** (kasir) | UC-04 · seeder `source=manual` | ⬜ | Tsabiq (form) + Regita (UI) |
-| C5 | Cari & pantau pesanan (UC-05) — filter status/tanggal/nama | UC-05 | ⬜ | Tsabiq + Regita |
-| C6 | Kelola pesanan (ubah/hapus pesanan oleh owner, UC-07) | UC-07 | ✅ sebagian | Tsabiq |
+| C3 | **Status alur pesanan** 6 tahap (`orders.status`) + state machine (karyawan maju 1 tahap, owner bebas koreksi) | Struktur DB (teman) + `catatan.txt` #1 | ✅ | Dwika (struktur) · Tsabiq (logika + tampilan) |
+| C4 | Catat pesanan **manual** (kasir) | UC-04 · seeder `source=manual` | ✅ | Tsabiq (form) + Regita (UI) |
+| C5 | Cari & pantau pesanan (UC-05) — filter status/tanggal/nama | UC-05 | ✅ | Tsabiq + Regita |
+| C6 | Kelola pesanan (ubah/batalkan pesanan oleh owner, UC-07) | UC-07 | ✅ | Tsabiq |
 
 ### D. Pembayaran (FR-… · `catatan.txt` #3)
 
 | No | Fitur | FR / UC | Status | PIC |
 |----|-------|---------|--------|-----|
 | D1 | Metode tunai & transfer di checkout | `catatan.txt` #3 | ✅ | Tsabiq |
-| D2 | Tabel `payments` + record otomatis saat checkout | Struktur DB (teman) | 🔄 **Sesi 5** | Dwika (struktur) · Tsabiq (logika) |
-| D3 | Opsi QRIS di checkout + `method` diperluas (tunai/transfer/qris) | Aturan mitra | 🔄 **Sesi 5** | Tsabiq |
-| D4 | Tampilkan riwayat & status pembayaran per pesanan (owner) | UC-04 | ⬜ | Regita (UI) + Tsabiq (query) |
+| D2 | Tabel `payments` + record otomatis saat checkout | Struktur DB (teman) | ✅ | Dwika (struktur) · Tsabiq (logika) |
+| D3 | Opsi QRIS di checkout + `method` diperluas (tunai/transfer/qris) | Aturan mitra | ✅ | Tsabiq |
+| D4 | Tampilkan riwayat & status pembayaran per pesanan (owner/karyawan) + sinkronisasi `payments` | UC-04 | ✅ | Regita (UI) + Tsabiq (query) |
 
 ### E. Stok Bahan & Laporan (Class Diagram · FR-… · UC-06)
 
 | No | Fitur | FR / UC | Status | PIC |
 |----|-------|---------|--------|-----|
 | E1 | Tabel `bahan_bakus` + CRUD stok (kurang/tambah) | Class Diagram `Karyawan.perbaruiStok()` | ⬜ | Tsabiq (backend) |
-| E2 | **Rekap & laporan** penjualan harian/bulanan (UC-06, FR-15) | UC-06 · FR-13/14/15 | ⬜ | Dwika (rumus rekap) + Tsabiq (query) + Regita (tampilan + cetak) |
-| E3 | Dashboard owner: total pendapatan (sudah ada, perluas dengan rekap) | — | ⬜ | Regita + Tsabiq |
+| E2 | **Rekap & laporan** penjualan harian/bulanan (UC-06, FR-15) | UC-06 · FR-13/14/15 | ✅ | Dwika (rumus rekap) + Tsabiq (query) + Regita (tampilan + cetak) |
+| E3 | Dashboard owner: total pendapatan dari pembayaran lunas + tautan laporan | — | ✅ | Regita + Tsabiq |
 
 ---
 
@@ -98,7 +98,7 @@ Legenda status: ✅ Selesai · 🔄 Sesi 5 (sedang dikerjakan) · ⬜ Belum · P
 
 ## Definisi Selesai (DoD) per Fitur
 
-1. Kode di branch fitur, lolos `php artisan test` (kecuali 7 kegagalan bawaan Breeze).
+1. Kode di branch fitur, lolos `php artisan test` (75 test) dan `./vendor/bin/pint --test`.
 2. `migrate:fresh --seed` jalan bersih di MariaDB maupun SQLite (test).
 3. Halaman bisa dibuka sesuai peran; lintas peran mendapat 403.
 4. README/ROADMAP diperbarui bila ada fitur baru.

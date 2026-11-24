@@ -37,6 +37,7 @@
                         <div class="ml-4">
                             <p class="font-term text-xs tracking-widest text-gray-500">BELUM_LUNAS</p>
                             <p class="text-2xl font-bold text-gray-800 font-term">{{ $stats['orders_belum_lunas'] }}</p>
+                            <p class="text-xs text-gray-400">{{ $stats['orders_menunggu_verifikasi'] }} menunggu verifikasi</p>
                         </div>
                     </div>
                 </div>
@@ -70,17 +71,17 @@
                             </svg>
                             <p class="text-center font-medium">Lihat Semua Pesanan</p>
                         </a>
-                        <a href="#" class="block p-4 border rounded-lg hover:bg-gray-50 transition">
+                        <a href="{{ route('karyawan.orders.create') }}" class="block p-4 border rounded-lg hover:bg-gray-50 transition">
                             <svg class="w-6 h-6 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             <p class="text-center font-medium">Pesanan Manual</p>
                         </a>
-                        <a href="#" class="block p-4 border rounded-lg hover:bg-gray-50 transition">
+                        <a href="{{ route('karyawan.orders.index') }}?payment_status=menunggu_verifikasi" class="block p-4 border rounded-lg hover:bg-gray-50 transition">
                             <svg class="w-6 h-6 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                             </svg>
-                            <p class="text-center font-medium">Cetak Pesanan</p>
+                            <p class="text-center font-medium">Verifikasi Bayar</p>
                         </a>
                     </div>
                 </div>
@@ -103,18 +104,16 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach(\App\Models\Order::with('user')->latest()->take(10)->get() as $order)
+                            @forelse($recentOrders as $order)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $order->order_number }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $order->customer_name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp{{ number_format($order->total_price, 0, ',', '.') }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                        @if($order->payment_status === 'lunas')
-                                            bg-green-100 text-green-800
-                                        @else
-                                            bg-yellow-100 text-yellow-800
-                                        @endif">
+                                        @if($order->payment_status === 'lunas') bg-green-100 text-green-800
+                                        @elseif($order->payment_status === 'menunggu_verifikasi') bg-blue-100 text-blue-800
+                                        @else bg-yellow-100 text-yellow-800 @endif">
                                         {{ ucfirst(str_replace('_', ' ', $order->payment_status)) }}
                                     </span>
                                 </td>
@@ -132,7 +131,11 @@
                                     <a href="{{ route('karyawan.orders.show', $order) }}" class="text-blue-600 hover:text-blue-900">Detail</a>
                                 </td>
                             </tr>
-                            @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="6" class="px-6 py-8 text-center text-gray-500">Belum ada pesanan.</td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

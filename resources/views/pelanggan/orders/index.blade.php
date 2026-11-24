@@ -35,7 +35,9 @@
                                 <td class="whitespace-nowrap px-4 py-3 text-xs font-bold text-brand-800">Rp{{ number_format($order->total_price, 0, ',', '.') }}</td>
                                 <td class="whitespace-nowrap px-4 py-3">
                                     <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold
-                                        @if($order->payment_status === 'lunas') bg-emerald-100 text-emerald-800 @else bg-amber-100 text-amber-800 @endif">
+                                        @if($order->payment_status === 'lunas') bg-emerald-100 text-emerald-800
+                                        @elseif($order->payment_status === 'menunggu_verifikasi') bg-blue-100 text-blue-800
+                                        @else bg-amber-100 text-amber-800 @endif">
                                         {{ ucfirst(str_replace('_', ' ', $order->payment_status)) }}
                                     </span>
                                 </td>

@@ -47,9 +47,15 @@
                             <x-nav-link :href="route('owner.users.index')" :active="request()->routeIs('owner.users*')">
                                 {{ __('Pengguna') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('owner.reports.index')" :active="request()->routeIs('owner.reports*')">
+                                {{ __('Laporan') }}
+                            </x-nav-link>
                         @elseif(auth()->user()->role === 'karyawan')
                             <x-nav-link :href="route('karyawan.orders.index')" :active="request()->routeIs('karyawan.orders*')">
                                 {{ __('Pesanan') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('karyawan.orders.create')" :active="request()->routeIs('karyawan.orders.create')">
+                                {{ __('Pesanan Manual') }}
                             </x-nav-link>
                         @else
                             <x-nav-link :href="route('pelanggan.orders.index')" :active="request()->routeIs('pelanggan.orders*')">
@@ -150,9 +156,15 @@
                     <x-responsive-nav-link :href="route('owner.users.index')" :active="request()->routeIs('owner.users*')">
                         {{ __('Pengguna') }}
                     </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('owner.reports.index')" :active="request()->routeIs('owner.reports*')">
+                        {{ __('Laporan') }}
+                    </x-responsive-nav-link>
                 @elseif(auth()->user()->role === 'karyawan')
                     <x-responsive-nav-link :href="route('karyawan.orders.index')" :active="request()->routeIs('karyawan.orders*')">
                         {{ __('Pesanan') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('karyawan.orders.create')" :active="request()->routeIs('karyawan.orders.create')">
+                        {{ __('Pesanan Manual') }}
                     </x-responsive-nav-link>
                 @else
                     <x-responsive-nav-link :href="route('pelanggan.orders.index')" :active="request()->routeIs('pelanggan.orders*')">

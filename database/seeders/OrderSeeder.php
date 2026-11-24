@@ -22,7 +22,7 @@ class OrderSeeder extends Seeder
                 fake()->randomElement([0, 15, 30, 45])
             );
 
-            $orderNumber = 'MAD-' . $pickupDate->format('Ymd') . '-' . str_pad($i + 1, 4, '0', STR_PAD_LEFT);
+            $orderNumber = 'MAD-'.$pickupDate->format('Ymd').'-'.str_pad($i + 1, 4, '0', STR_PAD_LEFT);
             $source = fake()->randomElement(['online', 'manual']);
 
             $user = $source === 'online' ? $pelanggan->random() : null;
@@ -44,7 +44,7 @@ class OrderSeeder extends Seeder
                 'order_number' => $orderNumber,
                 'user_id' => $user?->id,
                 'customer_name' => $customerName,
-                'phone' => '08' . fake()->numerify('##########'),
+                'phone' => '08'.fake()->numerify('##########'),
                 'pickup_datetime' => $pickupDate,
                 'payment_method' => fake()->randomElement(['tunai', 'transfer']),
                 'payment_status' => $paymentStatus,
@@ -67,6 +67,7 @@ class OrderSeeder extends Seeder
                 OrderItem::create([
                     'order_id' => $order->id,
                     'menu_id' => $menu->id,
+                    'menu_name' => $menu->name,
                     'quantity' => $quantity,
                     'price' => $menu->price,
                     'subtotal' => $subtotal,

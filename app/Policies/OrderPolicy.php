@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Order;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class OrderPolicy
 {
@@ -18,6 +17,7 @@ class OrderPolicy
         if ($user->role === 'owner' || $user->role === 'karyawan') {
             return true;
         }
+
         return $user->id === $order->user_id;
     }
 
@@ -31,6 +31,7 @@ class OrderPolicy
         if ($user->role === 'owner' || $user->role === 'karyawan') {
             return true;
         }
+
         return false;
     }
 
@@ -42,6 +43,7 @@ class OrderPolicy
         if ($user->role === 'pelanggan' && $user->id === $order->user_id) {
             return $order->status === 'menunggu_pembayaran';
         }
+
         return false;
     }
 

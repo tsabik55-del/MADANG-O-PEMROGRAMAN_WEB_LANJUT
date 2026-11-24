@@ -103,18 +103,21 @@ class CartCheckoutTest extends TestCase
         $this->assertSame(2, Order::count());
 
         // Pelanggan boleh membatalkan selama masih menunggu_pembayaran.
+        // Pembatalan bersifat soft cancel: riwayat tetap disimpan.
         $first = Order::orderBy('id')->first();
         $this->actingAs($user)->delete(route('pelanggan.orders.destroy', $first))->assertRedirect();
-        $this->assertSame(1, Order::count(), 'Satu pesanan seharusnya terhapus.');
+
+        $this->assertSame(2, Order::count(), 'Pesanan tidak boleh dihapus permanen.');
+        $this->assertSame('dibatalkan', $first->fresh()->status, 'Status pesanan harus menjadi dibatalkan.');
 
         // Pesanan berikutnya tidak boleh memakai nomor yang sudah dipakai.
         $this->actingAs($user)->post(route('pelanggan.orders.store'), $this->payload([
             ['id' => $menu->id, 'price' => 1000, 'quantity' => 1],
         ]))->assertSessionHasNoErrors();
 
-        $this->assertSame(2, Order::count());
+        $this->assertSame(3, Order::count());
         $this->assertSame(
-            2,
+            3,
             Order::pluck('order_number')->unique()->count(),
             'Nomor pesanan harus unik meski ada pesanan yang dibatalkan.'
         );
